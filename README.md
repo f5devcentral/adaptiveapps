@@ -1,11 +1,14 @@
 # Adaptive Applications Cookbook
 
 ## Adaptive Application Vision
-We see a world where each of your applications continuously adapts to its changing environment.
 
-* It [automates](automation/README.md) redundant processes for greater efficiencies. 
-* It expands and contracts based on [performance](performance/README.md) needs. 
-* It protects itself, [securing](security/README.md) points of vulnerability. 
-* And by mining all these data points, it gets smarter, [insightful](insight/README.md), becomes self-healing, and evolves even more quickly. 
+Adaptive Applications bring intelligence and real-time changes to the world of application deployments, which today are mostly static and manual.
+Adaptive Applications utilize an architectural approach that can rapidly respond with little to no human interaction to changes in the breadth and sophistication of cyberattacks, security posture, end-user demand, application performance, global availability, and condition across one or more infrastructure environments.
+These apps are enabled by a near-real-time collection of live application and security telemetry, guided by service management policies, analyzed by ML/AI techniques, and harnessed to automation toolchains to rapidly adjust infrastructure and security controls to change conditions.
 
-In our vision, your applications learn to take care of themselves&mdash;leaving you free to focus on delivering extraordinary digital experiences that inspire customers, keep them safe, and increase loyalty.
+Adaptive Applications ultimately empower customers to securely innovate and deliver extraordinary digital experiences to their end users.
+Specifically, Adaptive Application benefit customers in four ways:
+1. More rapidly detect and neutralize [security](1-security/README.md) threats
+2. Improve application [performance](2-performance/README.md) and resilience
+3. [Speed deployments](3-speed-deployments/README.md) of new apps
+4. Easily [unify policy](4-unify-policy/README.md) across on-prem, public cloud, and edge environments
