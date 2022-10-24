@@ -1,0 +1,91 @@
+---
+- name: Deploy API
+  gather_facts: no
+  hosts: all
+  vars:
+    proxy_name: petstore-api
+    openapi_path: src/main/resources/openapi.yaml
+    openapi_file: "{{ lookup('ansible.builtin.file', openapi_path) }}"
+    workspace: "https://localhost/api/acm/v1/services/workspaces/{{ lookup('ansible.builtin.env', 'NMS_WORKSPACE') }}"
+    api_title: "{{ (openapi_file | from_yaml).info.title | lower | regex_replace('\\s', '-') }}"
+    api_version: "{{ (openapi_file| from_yaml).info.version | regex_replace('\\.', '-') }}"
+    api_doc_name: "{{ api_title }}-{{ api_version }}"
+    proxy_config:
+      name: "{{ proxy_name }}"
+      version: v1
+      specRef: "{{ api_doc_name }}"
+      proxyConfig:
+        hostname: "{{ lookup('ansible.builtin.env', 'NMS_API_HOST') }}"
+        ingress:
+          basePath: "/api/v1"
+        backends:
+        - serviceName: "{{ proxy_name }}-svc"
+          serviceTargets: []
+      portalConfig:
+        hostname: "{{ lookup('ansible.builtin.env', 'NMS_DEV_HOST') }}"
+  tasks:
+  - name: Check API Document
+    ansible.builtin.uri:
+      url: "{{ workspace }}/api-docs/{{ api_doc_name}}"
+      validate_certs: no
+      user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: get
+      status_code: [200, 404]
+    register: doc_result
+  - name: Create API Document
+    when: doc_result.json._links | length == 0
+    ansible.builtin.uri:
+      url: "{{ workspace }}/api-docs"
+      validate_certs: no
+      user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: post
+      body_format: json
+      body: "{{ openapi_file | from_yaml | to_json }}"
+      status_code: [201]
+    changed_when: true
+  - name: Update API Document
+    when: doc_result.json._links | length > 0
+    ansible.builtin.uri:
+      url: "{{ workspace }}/api-docs"
+      validate_certs: no
+      user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: post
+      body_format: json
+      body: "{{ openapi_file | from_yaml | to_json }}"
+      status_code: [200]
+    changed_when: true
+  - name: Check Proxy
+    ansible.builtin.uri:
+      url: "{{ workspace }}/proxies/{{ proxy_name }}"
+      validate_certs: no
+      user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: get
+    register: proxy_result
+  - name: Create proxy
+    when: proxy_result.json._links | length == 0
+    ansible.builtin.uri:
+      url: "{{ workspace }}/proxies"
+      validate_certs: no
+      user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: post
+      body_format: json
+      body: "{{ proxy_config | to_json }}"
+      status_code: [202]
+    changed_when: true
+  - name: Update proxy
+    when: proxy_result.json._links | length > 0
+    ansible.builtin.uri:
+      url: "{{ workspace }}/proxies//{{ proxy_name }}"
+      validate_certs: no
+      user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: put
+      body_format: json
+      body: "{{ proxy_config | to_json }}"
+      status_code: [202]
+    changed_when: true
