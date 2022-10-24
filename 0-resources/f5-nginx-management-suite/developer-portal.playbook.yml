@@ -1,0 +1,48 @@
+---
+- name: nginx
+  hosts: all
+  tasks:
+  - name: Install NGINX Plus
+    ansible.builtin.include_role:
+      name: nginxinc.nginx
+    vars:
+      nginx_type: plus
+      nginx_license:
+        certificate: license/nginx-repo.crt
+        key: license/nginx-repo.key
+      nginx_remove_license: false
+      nginx_modules:
+        - njs
+  - name: Add NGINX Signing Key
+    ansible.builtin.apt_key:
+      url: https://cs.nginx.com/static/keys/nginx_signing.key
+  - name: Add NGINX Management Suite Repo
+    ansible.builtin.apt_repository:
+      repo: deb https://pkgs.nginx.com/nms/ubuntu focal nginx-plus
+  - name: Install NGINX Developer Portal
+    ansible.builtin.apt:
+      pkg:
+        - nginx-devportal
+        - nginx-devportal-ui
+  - name: Configure SQLite for Dev Portal
+    ansible.builtin.blockinfile:
+      path: /etc/nginx-devportal/devportal.conf
+      block: |
+        DB_TYPE="sqlite"
+        DB_PATH="/var/lib/nginx-devportal"
+  - name: Start devportal
+    ansible.builtin.systemd:
+      state: started
+      name: nginx-devportal
+  - name: Download NGINX Agent install script
+    ansible.builtin.get_url:
+      url: "https://{{ lookup('ansible.builtin.env', 'NMS_HOST') }}/install/nginx-agent"
+      dest: /etc/nginx-agent.sh
+      validate_certs: no
+      mode: '0755'
+  - name: Install NGINX Agent
+    ansible.builtin.shell: "/etc/nginx-agent.sh -g {{ lookup('ansible.builtin.env', 'NMS_DEV_CLUSTER_NAME') }}"
+  - name: Start nginx-agent
+    ansible.builtin.systemd:
+      state: started
+      name: nginx-agent
