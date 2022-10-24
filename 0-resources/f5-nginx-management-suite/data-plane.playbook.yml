@@ -1,0 +1,26 @@
+---
+- name: nginx
+  hosts: all
+  tasks:
+  - name: Install NGINX Plus
+    ansible.builtin.include_role:
+      name: nginxinc.nginx
+    vars:
+      nginx_type: plus
+      nginx_license:
+        certificate: license/nginx-repo.crt
+        key: license/nginx-repo.key
+      nginx_modules:
+        - njs
+  - name: Download NGINX Agent install script
+    ansible.builtin.get_url:
+      url: "https://{{ lookup('ansible.builtin.env', 'NMS_HOST') }}/install/nginx-agent"
+      dest: /etc/nginx-agent.sh
+      validate_certs: no
+      mode: '0755'
+  - name: Install NGINX Agent
+    ansible.builtin.shell: "/etc/nginx-agent.sh -g {{ lookup('ansible.builtin.env', 'NMS_CLUSTER_NAME') }}"
+  - name: Start nginx-agent
+    ansible.builtin.systemd:
+      state: started
+      name: nginx-agent

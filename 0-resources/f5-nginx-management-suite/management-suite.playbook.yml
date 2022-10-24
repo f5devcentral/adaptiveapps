@@ -1,0 +1,171 @@
+---
+- name: nginx
+  hosts: all
+  tasks:
+  - name: Install NGINX Plus
+    ansible.builtin.include_role:
+      name: nginxinc.nginx
+    vars:
+      nginx_type: plus
+      nginx_license:
+        certificate: license/nginx-repo.crt
+        key: license/nginx-repo.key
+      nginx_remove_license: false
+  - name: Add ClickHouse Key
+    ansible.builtin.apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: E0C56BD4
+  - name: Update cache
+    ansible.builtin.apt:
+      update_cache: true
+      cache_valid_time: 3600
+  - name: Add ClickHouse Repo
+    ansible.builtin.apt_repository:
+      repo: deb http://repo.yandex.ru/clickhouse/deb/stable/ main/
+  - name: Install ClickHouse
+    ansible.builtin.apt:
+      pkg:
+        - apt-transport-https
+        - clickhouse-server
+        - clickhouse-client
+  - name: Configure Clickhouse default user
+    ansible.builtin.copy:
+      dest: /etc/clickhouse-server/users.d/10-default.xml
+      content: |
+        <?xml version="1.0"?>
+        <clickhouse>
+            <users>
+                <default>
+                    <password>{{ lookup('ansible.builtin.env', 'NMS_CH_PASSWORD') }}</password>
+                </default>
+            </users>
+        </clickhouse>
+
+  - name: Start clickhouse-server
+    ansible.builtin.systemd:
+      state: started
+      name: clickhouse-server
+  - name: Add NGINX Signing Key
+    ansible.builtin.apt_key:
+      url: https://cs.nginx.com/static/keys/nginx_signing.key
+  - name: Add NGINX Management Suite Repo
+    ansible.builtin.apt_repository:
+      repo: deb https://pkgs.nginx.com/nms/ubuntu focal nginx-plus
+  - name: Install NGINX Instance Manager
+    ansible.builtin.apt:
+      pkg:
+        - nms-instance-manager
+  - name: Install NGINX API Connectivity Manager
+    ansible.builtin.apt:
+      pkg:
+        - nms-api-connectivity-manager
+  - name: Configure NMS connection to clickhouse
+    ansible.builtin.blockinfile:
+      path: /etc/nms/nms.conf
+      block: |
+        clickhouse_address = 127.0.0.1:9000
+        clickhouse_username = 'default'
+        clickhouse_password = '{{ lookup('ansible.builtin.env', 'NMS_CH_PASSWORD') }}'
+
+  - name: Install python-passlib for htpasswd update
+    ansible.builtin.apt:
+      pkg:
+        - python3-passlib
+  - name: Update NMS password
+    community.general.htpasswd:
+      path: /etc/nms/nginx/.htpasswd
+      name: admin
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+  - name: Start nms
+    ansible.builtin.systemd:
+      state: started
+      name: nms
+  - name: Restart nginx
+    ansible.builtin.systemd:
+      state: restarted
+      name: nginx
+  - name: Install license
+    ansible.builtin.uri:
+      url: "https://localhost/api/platform/v1/license"
+      validate_certs: no
+      user: admin
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: PUT
+      body_format: json
+      body: |
+        {
+          "desiredState": {
+            "content": "{{ lookup('ansible.builtin.file', 'license/nginx.lic') | b64encode }}"
+          },
+          "metadata": {
+            "name": "license"
+          }
+        }
+  - name: Give the license time to take effect
+    ansible.builtin.pause:
+      seconds: 10
+  - name: Create infrastructure workspace
+    ansible.builtin.uri:
+      url: "https://localhost/api/acm/v1/infrastructure/workspaces"
+      validate_certs: no
+      user: admin
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: POST
+      body_format: json
+      body: |
+        {
+          "name": "demo"
+        }
+      status_code: [200, 201, 409]
+  - name: Create infrastructure environment
+    ansible.builtin.uri:
+      url: "https://localhost/api/acm/v1/infrastructure/workspaces/demo/environments"
+      validate_certs: no
+      user: admin
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: POST
+      body_format: json
+      body: |
+        {
+          "name": "dev",
+          "functions": [
+            "API-GATEWAY",
+            "DEVPORTAL"
+          ],
+          "proxies": [
+            {
+              "proxyClusterName": "{{ lookup('ansible.builtin.env', 'NMS_CLUSTER_NAME') }}",
+              "hostnames": [
+                "{{ lookup('ansible.builtin.env', 'NMS_CLUSTER_HOST') }}"
+              ],
+              "runtime": "GATEWAY-PROXY"
+            },
+            {
+              "proxyClusterName": "{{ lookup('ansible.builtin.env', 'NMS_DEV_CLUSTER_NAME') }}",
+              "hostnames": [
+                "{{ lookup('ansible.builtin.env', 'NMS_DEV_CLUSTER_HOST') }}"
+
+              ],
+              "runtime": "PORTAL-PROXY"
+            }
+          ]
+        }
+      status_code: [200, 201, 202, 409]
+  - name: Add internal Dev Portal to /etc/hosts
+    ansible.builtin.blockinfile:
+      path: /etc/hosts
+      block: |
+        {{ lookup('ansible.builtin.env', 'NMS_DEV_CLUSTER_HOST') }} acm.{{ lookup('ansible.builtin.env', 'NMS_DEV_CLUSTER_HOST') }}
+  - name: Create service workspace
+    ansible.builtin.uri:
+      url: "https://localhost/api/acm/v1/services/workspaces"
+      validate_certs: no
+      user: admin
+      password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
+      method: POST
+      body_format: json
+      body: |
+        {
+          "name": "petstore"
+        }
+      status_code: [200, 201, 409]
