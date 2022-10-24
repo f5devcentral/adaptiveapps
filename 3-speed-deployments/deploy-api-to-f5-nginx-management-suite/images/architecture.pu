@@ -1,0 +1,38 @@
+@startuml
+!include <osa/user/green/developer/developer>
+!include <osa/user/blue/blue>
+!include <osa/user/blue/sysadmin/sysadmin>
+
+!include <osa/database/database>
+!include <osa/lifecycle/lifecycle>
+!include <osa/vpn/vpn>
+!include <osa/hub/hub>
+
+label "Application Developer\n<$developer>" as developer
+label "API Owner\n<$sysadmin>" as admin
+label "User\n<$blue>" as user
+
+skinparam packageStyle Rectangle
+package {
+    rectangle "Code Repository\n<$database>" as repo
+    rectangle "CI/CD Pipeline\n<$lifecycle>" as cicd
+
+    collections "Application Servers\n<$vpn>" as apps
+
+    together {
+        rectangle "F5 NGINX Management Suite\n<$hub>" as nms
+        rectangle "F5 NGINX Data Plane\n<$hub>" as dp
+    }
+}
+developer -> repo :Commits code to repository
+repo -> cicd :Triggers CI/CD pipeline
+admin --> nms :Manages infrastructure
+user -> dp :Connects to APIs
+
+cicd -> apps :Deploys to application server
+
+cicd -> nms :Updates API routing
+nms --> dp :Configures data plane
+apps <- dp :Routes traffic to servers
+
+@enduml

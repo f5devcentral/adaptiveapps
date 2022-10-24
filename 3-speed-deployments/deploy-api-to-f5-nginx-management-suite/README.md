@@ -1,6 +1,8 @@
 # Deploying API Changes to F5 NGINX Management Suite 
 
 ## Solution Description
+![Architecture Diagram](images/architecture.png)
+
 In this solution a developer's changes to an API specified by an OpenAPI document are deployed to F5 NGINX Management Suite.
 Using this solution in a CI/CD pipeline provides a way to automate API discovery, registration, and security as API changes are made.
 
