@@ -20,6 +20,20 @@ Running the `deploy.yml` playbook with the appropriate environment variables wil
 * NMS_API_HOST: Hostname of NGINX Data Plane host.
 * NMS_DEV_HOST: Hostname of the NGINX Developer Portal host.
 
+### CI/CD Example
+Below is an example of running the playbook in a GitLab CI/CD job.
+Most of the above environment variables are specified in the CI/CD variable settings.
+
+```yaml
+deploy-api:
+  image: python:3.10
+  stage: deploy
+  script:
+    - pip install ansible
+    - chmod 400 $NMS_KEY
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i "$NMS_HOST," --private-key $NMS_KEY deploy.yml
+```
+
 ## Deep Dive
 This section goes through the `deploy.yaml` Ansible Playbook in additional detail.
 The playbook is making use of the `ansible.builtin.url` module to make calls to the F5 NGINX API Connectivity Manager REST API.
