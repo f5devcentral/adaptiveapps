@@ -8,6 +8,14 @@ Using this solution in a CI/CD pipeline provides a way to automate API discovery
 
 ## Value
 API changes are published to a central location as they are made to improve API discovery.
+Specifically, this solution solves the following use case:
+```gherkin
+Given a running instance of F5 NGINX Management Suite
+    And a workspace is configured with F5 NGINX Management Suite
+When a developer commits an API change
+Then the API documentation in the Dev Portal is updated
+    And traffic policies are updated to securely route traffic to the new API
+```
 
 ## Automation to Deploy Solution
 Automation is done using Ansible.
