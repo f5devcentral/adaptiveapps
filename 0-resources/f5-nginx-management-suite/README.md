@@ -93,7 +93,7 @@ Getting the ClickHouse dependency installed takes a few steps since we need to a
 After ClickHouse is installed, we need to specify a password so we can connect Management Suite to it later.
 Finally, we need to make sure ClickHouse is running.
 
-### Add NGINX Managementt Suite Repo
+### Add NGINX Management Suite Repo
 ```yaml
   - name: Add NGINX Signing Key
     ansible.builtin.apt_key:
