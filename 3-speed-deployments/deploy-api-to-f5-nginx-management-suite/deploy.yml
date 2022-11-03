@@ -27,7 +27,7 @@
   tasks:
   - name: Check API Document
     ansible.builtin.uri:
-      url: "{{ workspace }}/api-docs/{{ api_doc_name}}"
+      url: "{{ workspace }}/api-docs/{{ api_doc_name }}"
       validate_certs: no
       user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
       password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
@@ -35,7 +35,7 @@
       status_code: [200, 404]
     register: doc_result
   - name: Create API Document
-    when: doc_result.json._links | length == 0
+    when: doc_result.status != 200
     ansible.builtin.uri:
       url: "{{ workspace }}/api-docs"
       validate_certs: no
@@ -47,13 +47,13 @@
       status_code: [201]
     changed_when: true
   - name: Update API Document
-    when: doc_result.json._links | length > 0
+    when: doc_result.status == 200
     ansible.builtin.uri:
-      url: "{{ workspace }}/api-docs"
+      url: "{{ workspace }}/api-docs/{{ api_doc_name }}"
       validate_certs: no
       user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
       password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
-      method: post
+      method: put
       body_format: json
       body: "{{ openapi_file | from_yaml | to_json }}"
       status_code: [200]
@@ -81,7 +81,7 @@
   - name: Update proxy
     when: proxy_result.json._links | length > 0
     ansible.builtin.uri:
-      url: "{{ workspace }}/proxies//{{ proxy_name }}"
+      url: "{{ workspace }}/proxies/{{ proxy_name }}"
       validate_certs: no
       user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
       password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"

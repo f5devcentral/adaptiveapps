@@ -50,7 +50,7 @@ The playbook is making use of the `ansible.builtin.url` module to make calls to 
 ```yaml
   - name: Check API Document
     ansible.builtin.uri:
-      url: "{{ workspace }}/api-docs/{{ api_doc_name}}"
+      url: "{{ workspace }}/api-docs/{{ api_doc_name }}"
       user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
       password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
       method: get
@@ -76,12 +76,12 @@ If the API document does not exist, we create it with a `POST` request.
 
 ```yaml
   - name: Update API Document
-    when: doc_result.json._links | length > 0
+    when: doc_result.status == 200
     ansible.builtin.uri:
-      url: "{{ workspace }}/api-docs"
+      url: "{{ workspace }}/api-docs/{{ api_doc_name }}"
       user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
       password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
-      method: post
+      method: put
       body_format: json
       body: "{{ openapi_file | from_yaml | to_json }}"
       status_code: [200]
@@ -149,7 +149,7 @@ If the proxy configuration does not exist, we create it with a `POST` request.
   - name: Update proxy
     when: proxy_result.json._links | length > 0
     ansible.builtin.uri:
-      url: "{{ workspace }}/proxies//{{ proxy_name }}"
+      url: "{{ workspace }}/proxies/{{ proxy_name }}"
       user: "{{ lookup('ansible.builtin.env', 'NMS_USER') }}"
       password: "{{ lookup('ansible.builtin.env', 'NMS_PASSWORD') }}"
       method: put
