@@ -20,7 +20,8 @@
           basePath: "/api/v1"
         backends:
         - serviceName: "{{ proxy_name }}-svc"
-          serviceTargets: []
+          serviceTargets:
+            - hostname: "{{ lookup('ansible.builtin.env', 'SVC_HOSTNAME') }}"
       portalConfig:
         hostname: "{{ lookup('ansible.builtin.env', 'NMS_DEV_HOST') }}"
   tasks:

@@ -104,14 +104,15 @@ Instead we can use a `PUT` request to update the proxy configuration.
       version: v1
       specRef: "{{ api_doc_name }}"
       proxyConfig:
-        hostname: 10.145.74.5
+        hostname: "{{ lookup('ansible.builtin.env', 'NMS_API_HOST') }}"
         ingress:
-          basePath: "/v1"
+          basePath: "/api/v1"
         backends:
         - serviceName: "{{ proxy_name }}-svc"
-          serviceTargets: []
+          serviceTargets:
+            - hostname: "{{ lookup('ansible.builtin.env', 'SVC_HOSTNAME') }}"
       portalConfig:
-        hostname: 10.145.77.104
+        hostname: "{{ lookup('ansible.builtin.env', 'NMS_DEV_HOST') }}"
 ```
 At the beginning of the playbook we create the proxy configuration and store it in a variable.
 This makes it easier for us to reuse this data for different HTTP requests without duplicating it in the playbook.
