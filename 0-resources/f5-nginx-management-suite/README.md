@@ -7,6 +7,8 @@ Since most of the configuration is done with Ansible, this solution should be si
 Simply modify the `main.tf` Terraform file as needed for your environment.
 This solution consists of three compute instances: The Management Suite host, a Data Plane host, and a Developer Portal host.
 
+![Architecture Diagram](https://docs.nginx.com/nginx-management-suite/acm/about/images/HighLevelComponents.png)
+
 ## Value
 This solution deploys the F5 NGINX Management suite using infrastructure as code tools to provide consistent, scalable, and reliable infrastructure.
 Ansible playbooks are used extensively to allow users at various stages of adopting infrastructure as code to take advantage of this solution.
