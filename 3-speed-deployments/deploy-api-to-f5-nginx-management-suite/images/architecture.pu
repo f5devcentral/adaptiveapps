@@ -9,7 +9,7 @@
 !include <osa/hub/hub>
 
 label "Application Developer\n<$developer>" as developer
-label "API Owner\n<$sysadmin>" as admin
+label "System Administrator" as admin
 label "User\n<$blue>" as user
 
 skinparam packageStyle Rectangle
