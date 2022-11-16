@@ -6,6 +6,7 @@ The installation follows the steps outlined in the [install guide](https://docs.
 Since most of the configuration is done with Ansible, this solution should be simple to port to other environments.
 Simply modify the `main.tf` Terraform file as needed for your environment.
 This solution consists of three compute instances: The Management Suite host, a Data Plane host, and a Developer Portal host.
+Additional information on the architecture, including the below diagram, can be found in the [API Connectivity Manager Architecture Overview page](https://docs.nginx.com/nginx-management-suite/acm/about/architecture/)
 
 ![Architecture Diagram](https://docs.nginx.com/nginx-management-suite/acm/about/images/HighLevelComponents.png)
 
