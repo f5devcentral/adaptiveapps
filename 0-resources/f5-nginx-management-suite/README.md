@@ -18,6 +18,9 @@ More advanced users can execute these playbooks from Hashicorp Terraform when de
 The Developer Portal from Management Suite provides a common location to publish APIs to, and a common location to discovery APIs from.
 This can help reduce the time to learn new APIs and reduce the risk of creating duplicate APIs.
 
+## Demo
+![Demo Video](images/demo.mp4)
+
 ## Automation to Deploy Solution
 
 ### Prerequisites
