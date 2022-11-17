@@ -26,10 +26,10 @@ Additionally, you will need the [NGINX Ansible role](https://galaxy.ansible.com/
 
 ### Just Add Credentials
 Since it would be a bad idea to submit credentials and other secrets to this repository, the following files are excluded and will need to be provided by the user:
-* license/nginx.lic: This is the NGINX Management Suite license obtained from F5
-* license/nginx-repo.crt: This is the certificate used to connect to the NGINX repository obtained from F5
-* license/nginx-repo.key: This is the key used to connect to the NGINX repository obtained from F5
-* ssh.key: This file is used to connect to the provisioned servers to configure them with Ansible.
+* **license/nginx.lic**: This is the NGINX Management Suite license obtained from F5
+* **license/nginx-repo.crt**: This is the certificate used to connect to the NGINX repository obtained from F5
+* **license/nginx-repo.key**: This is the key used to connect to the NGINX repository obtained from F5
+* **ssh.key**: This file is used to connect to the provisioned servers to configure them with Ansible.
 This file can be named anything, and the path must be specified in the `private_key_path` Terraform variable
 * Any credentials needed for the Terraform provider
 
@@ -37,9 +37,9 @@ This file can be named anything, and the path must be specified in the `private_
 In addition to any variables required by providers, the following variables are passed from Terraform to Ansible.
 Please see the [Terraform documentation](https://developer.hashicorp.com/terraform/language/values/variables#assigning-values-to-root-module-variables) for more information on setting variables.
 
-* private_key_path: Path to the private key file that Ansible will use to connect to the hosts.
-* nms_password: The password that will be used for the admin user in F5 NGINX Management Suite.
-* nms_cluster_name: This is the name given to the API gateway cluster. The Developer Portal cluster will use the same name suffixed with "-dev".
+* **private_key_path**: Path to the private key file that Ansible will use to connect to the hosts.
+* **nms_password**: The password that will be used for the admin user in F5 NGINX Management Suite.
+* **nms_cluster_name**: This is the name given to the API gateway cluster. The Developer Portal cluster will use the same name suffixed with "-dev".
 
 ### Make It so!
 Now comes the fun part.
