@@ -1,7 +1,7 @@
-# F5 NGINX Management Suite Infrastructure as Code
+# F5 NGINX Management Suite and API Connectivity Manager Infrastructure as Code
 
 ## Solution Description
-This solution deploys F5 NGINX Management Suite to OpenStack using Terraform and Ansible.
+This solution deploys F5 NGINX Management Suite with API Connectivity Manager to OpenStack using Terraform and Ansible.
 The installation follows the steps outlined in the [install guide](https://docs.nginx.com/nginx-management-suite/admin-guides/installation/install-guide/).
 Since most of the configuration is done with Ansible, this solution should be simple to port to other environments.
 Simply modify the `main.tf` Terraform file as needed for your environment.
@@ -11,7 +11,7 @@ Additional information on the architecture, including the below diagram, can be 
 ![Architecture Diagram](https://docs.nginx.com/nginx-management-suite/acm/about/images/HighLevelComponents.png)
 
 ## Value
-This solution deploys the F5 NGINX Management suite using infrastructure as code tools to provide consistent, scalable, and reliable infrastructure.
+This solution deploys the F5 NGINX Management Suite and API Connectivity Manager using infrastructure as code tools to provide consistent, scalable, and reliable infrastructure.
 Ansible playbooks are used extensively to allow users at various stages of adopting infrastructure as code to take advantage of this solution.
 Users just getting started with automation can use the playbooks directly to provide some consistency to their environments.
 More advanced users can execute these playbooks from Hashicorp Terraform when deploying instances, or even use Hashicorp Packer to generate pre-built images to deploy.
@@ -19,14 +19,19 @@ The Developer Portal from Management Suite provides a common location to publish
 This can help reduce the time to learn new APIs and reduce the risk of creating duplicate APIs.
 
 ## Automation to Deploy Solution
+
+### Prerequisites
 To deploy this solution, you need Terraform and Ansible installed.
 Additionally, you will need the [NGINX Ansible role](https://galaxy.ansible.com/nginxinc/nginx) installed.
-Since the Ansible playbooks are run by Terraform, only Terraform commands need to be run.
 
-```bash
-terraform init
-terraform apply
-```
+### Just Add Credentials
+Since it would be a bad idea to submit credentials and other secrets to this repository, the following files are excluded and will need to be provided by the user:
+* license/nginx.lic: This is the NGINX Management Suite license obtained from F5
+* license/nginx-repo.crt: This is the certificate used to connect to the NGINX repository obtained from F5
+* license/nginx-repo.key: This is the key used to connect to the NGINX repository obtained from F5
+* ssh.key: This file is used to connect to the provisioned servers to configure them with Ansible.
+This file can be named anything, and the path must be specified in the `private_key_path` Terraform variable
+* Any credentials needed for the Terraform provider
 
 ### Variables
 In addition to any variables required by providers, the following variables are passed from Terraform to Ansible.
@@ -35,6 +40,15 @@ Please see the [Terraform documentation](https://developer.hashicorp.com/terrafo
 * private_key_path: Path to the private key file that Ansible will use to connect to the hosts.
 * nms_password: The password that will be used for the admin user in F5 NGINX Management Suite.
 * nms_cluster_name: This is the name given to the API gateway cluster. The Developer Portal cluster will use the same name suffixed with "-dev".
+
+### Make It so!
+Now comes the fun part.
+If your variables are specified in a `terraform.tfvars` file, then you just need to initialize Terraform and run the Terraform file.
+
+```bash
+terraform init
+terraform apply
+```
 
 ## Deep Dive
 The following sections describe how the installation instructions from the [install guide](https://docs.nginx.com/nginx-management-suite/admin-guides/installation/install-guide/) were translated to Ansible tasks.
