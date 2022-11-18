@@ -1,9 +1,10 @@
-# Deploying API Changes to F5 NGINX Management Suite 
+# Deploying API Changes to F5 NGINX API Connectivity Manager (ACM)
 
 ## Solution Description
 <img src="images/architecture.png" height="75%" width="75%">
 
-In this solution a developer's changes to an API specified by an OpenAPI document are deployed to F5 NGINX Management Suite.
+In this solution a developer's changes to an API specified by an OpenAPI document are deployed to F5 NGINX API Connectivity Manager (ACM).
+The changes are deployed using an Ansible playbook that leverages ACM's REST API.
 Using this solution in a CI/CD pipeline provides a way to automate API discovery, registration, and security as API changes are made.
 
 ## Value
@@ -27,6 +28,7 @@ Running the `deploy.yml` playbook with the appropriate environment variables wil
 * NMS_PASSWORD: Password of the Management Suite account that will be making the updates.
 * NMS_API_HOST: Hostname of NGINX Data Plane host.
 * NMS_DEV_HOST: Hostname of the NGINX Developer Portal host.
+* SVC_HOST: The hostname of the backend that is serving the API.
 
 ### CI/CD Example
 Below is an example of running the playbook in a GitLab CI/CD job.
