@@ -18,6 +18,9 @@ Then the API documentation in the Dev Portal is updated
     And traffic policies are updated to securely route traffic to the new API
 ```
 
+## Demo
+![Demo Video](images/demo.mp4)
+
 ## Automation to Deploy Solution
 Automation is done using Ansible.
 Running the `deploy.yml` playbook with the appropriate environment variables will deploy the OpenAPI document to F5 NGINX Management Suite.
