@@ -10,29 +10,36 @@
 
 label "Application Developer\n<$developer>" as developer
 label "System Administrator\n<$sysadmin>" as admin
+label "API Owner\n<$sysadmin>" as apiowner
 label "User\n<$blue>" as user
 
 skinparam packageStyle Rectangle
 package {
     rectangle "Code Repository\n<$database>" as repo
+    rectangle "F5 NGINX Developer Portal\n<$hub>" as devportal
     rectangle "CI/CD Pipeline\n<$lifecycle>" as cicd
 
     collections "Application Servers\n<$vpn>" as apps
 
     together {
-        rectangle "F5 NGINX Management Suite\n<$hub>" as nms
+        rectangle "F5 NGINX Management Suite\nwith API Connectivity Manager\n<$hub>" as nms
         rectangle "F5 NGINX Data Plane\n<$hub>" as dp
     }
 }
 developer -> repo :Commits code to repository
+developer -> devportal :Discovers APIs through the Developer Portal
 repo -> cicd :Triggers CI/CD pipeline
 admin --> nms :Manages infrastructure
+apiowner --> nms :Manages API workspaces
 user -> dp :Connects to APIs
 
 cicd -> apps :Deploys to application server
 
 cicd -> nms :Updates API routing
 nms --> dp :Configures data plane
+nms --> devportal :API Connectivity Manager publishes APIs to the Developer Portal
 apps <- dp :Routes traffic to servers
+
+devportal --[hidden]> apps
 
 @enduml
