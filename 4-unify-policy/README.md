@@ -1,5 +1,6 @@
-# Easily Unify Policy Across On-Prem, Public Cloud, and Edge Environments
+# Easily unify policies across on-prem, public cloud, and edge environments to reduce costs and complexity.
 
-Customers can reduce the cost and complexity of operating apps across heterogeneous application environments by defining and managing application security and deliver policies through a single management console and using built-in automation capabilities to enforce those policies across legacy and modern apps as well as spanning on-prem, public cloud, and edge environments.
+Unify policy declaration and enforcement by defining and managing application security and delivery policies through a single management console.
+Use built-in automation capabilities to enforce those policies across legacy and modern apps, and across environments.
 
 ## Recipes in this Section
