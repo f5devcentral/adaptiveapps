@@ -11,10 +11,10 @@ Find out more about adaptive applications on [F5's Website](https://www.f5.com/c
 
 ## Goals of Adaptive Applications
 This repository is structured around providing specific examples for the primary goals of adaptive applications:
-1. More rapidly detect and neutralize [security](1-security) threats
+1. More rapidly detect and neutralize security threats
 2. Improve application [performance](2-performance) and resilience
 3. [Speed deployments](3-speed-deployments) of new apps
-4. Easily [unify policy](4-unify-policy) across on-prem, public cloud, and edge environments
+4. Easily unify policy across on-prem, public cloud, and edge environments
 
 ## Support
 
