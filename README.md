@@ -22,6 +22,12 @@ The contents of this repository are meant to serve as examples and are not cover
 If you come across a bug or other issue when using these recipes, please open a GitHub issue to help our team keep track of content that needs improvement.
 Github Issues should be considered as best effort only and you should not expect to receive the same level of response as provided by F5 Support.
 
+## License
+
+The contents of this repository are made available under two license.
+All documentation, specifically any Markdown files, is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
+Everything else is licensed under [Apache 2.0](LICENSE).
+
 ## Copyright
 
 Copyright 2014-2022 F5 Networks Inc.
