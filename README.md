@@ -6,15 +6,27 @@ This repository contains recipes and examples to help F5 customers realize the b
 
 Adaptive applications utilize an architectural approach that facilitates rapid and often fully-automated responses to changing conditions—for example, new cyberattacks, updates to security posture, application performance degradations, or conditions across one or more infrastructure environments.
 And unlike the current state of many apps today that are labor-intensive to secure, deploy, and manage, adaptive apps are enabled by the collection and analysis of live application and security telemetry, service management policies, advanced analytic techniques such as machine learning, and automation toolchains.
+
+Specifically, adaptive applications allow you to:
+1. More rapidly detect and neutralize security threats
+2. Improve application performance and resilience
+3. Speed deployments of new apps
+4. Easily unify policy across on-prem, public cloud, and edge environments
+
+
 Find out more about adaptive applications on [F5's Website](https://www.f5.com/company/adaptive-applications)
 
+## Solution Inventory
 
-## Goals of Adaptive Applications
-This repository is structured around providing specific examples for the primary goals of adaptive applications:
-1. More rapidly detect and neutralize security threats
-2. Improve application [performance](2-performance) and resilience
-3. [Speed deployments](3-speed-deployments) of new apps
-4. Easily unify policy across on-prem, public cloud, and edge environments
+| Solution | Category | Description | Resources |
+| -------- | -------- |----------- | --------- |
+| [Deploy API to NGINX Management Suite](solutions/deploy-api-to-f5-nginx-management-suite) | Performance | Use a CI/CD pipeline to publish and update API routing and developer documentation | [F5 NGINX Management Suite](resources/f5-nginx-management-suite) |
+
+## Resource Inventory
+
+| Resource | Description | Used By |
+| -------- | ----------- | ------- |
+| [F5 NGINX Management Suite](resources/f5-nginx-management-suite) | Terraform and Ansible artifacts to deploy F5 NGINX Management Suite to virtual machines | [Deploy API to NGINX Management Suite](solutions/deploy-api-to-f5-nginx-management-suite) |
 
 ## Support
 
