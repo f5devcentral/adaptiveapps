@@ -1,7 +1,7 @@
 # Multi-Cluster Application Resilience
 
 ## Solution Description
-<img src="images/vk8s-use-case.png" height="75%" width="75%">
+<img src="images/vk8s-use-case.png" width="768">
 
 This solution example demostrates automated kubenetes application namespace failover leveraging F5 Distributed Cloud, specificlly, the following components of Application Management:
 
