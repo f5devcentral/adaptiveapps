@@ -13,13 +13,13 @@
 - [Configuration](#configuration)
   - [AWS EKS](#eks)
   - [F5XC mK8S](#mk8s)
-- [Usage](#usage)
 - [Decommission](#decommission)
   - [AWS](#aws)
   - [F5XC](#f5xc)
 - [TODO](#todo)
 - [Contributing](#contributing)
 - [License](#license)
+- [Credits](#credits)
 ---
 
 ## Background
