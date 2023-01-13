@@ -164,7 +164,7 @@ enable_synthetic_monitors = true
 enable_client_side_defense = true
 ```
 
-> **_Note:_** *This deploys to the US F5XC region as indicated within comments, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.*
+> **_Note:_** *This deploys to the US F5XC Region, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.*
 
 
 3. Change directory to F5XC shop deployment:
@@ -191,7 +191,7 @@ terraform validate
 terraform plan --var-file=$HOME/terraform.tfvars
 ```
 
-7. Finally, apply Terraform plan with auto-approve to avoid the [y] (validated right?):
+7. Finally, apply Terraform plan with auto-approve to avoid the `[y]` confirmation request _(you validated right?)_:
 
 ```sh
 terraform apply --auto-approve --var-file=$HOME/terraform.tfvars
@@ -231,13 +231,6 @@ This is a quick as-built for managed k8s (addition of EKS microservices):
     - clone vk8s f5xc TF code for this one?
     - AWS EKS is HTTP and **NOT** HTTPS
 4. add origin pool for AWS EKS to vk8s LB (deployment-fe)
-
-
----
-## Usage
-
-***outline narrative for demonstration or link to a doc/pptx(?)***
-
 
 ---
 ## Decommission
@@ -288,22 +281,21 @@ export VES_P12_PASSWORD="SuperSecret"
     - `terraform init --upgrade`
 7. destroy plan:
     - `terraform destroy --auto-approve --var-file=$HOME/f5xc_shop.tfvars`
-   
-
 
 ---
 ## TODO
 
-- [ ] Usage Instructions(?)
+- [ ] Config & decommission instruction build out.
+- [ ] add screen shots, or `curl` commands for f5xc http-lb updates
 
-
+---
 ## Contributing
 
 See [the contributing file](CONTRIBUTING.md)!
 
 PRs accepted.
 
-
+---
 ## License
 
 [Apache](../LICENSE)
