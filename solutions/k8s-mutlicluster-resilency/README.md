@@ -66,7 +66,7 @@ kubectl delete -f release/kubernetes-manifests.yaml
 kubectl get pods -o=wide -n=default
 ```
 
-4. Validate failover resilency by opening a broswer to [https://shop.<example.com>], replacing example.com with the FQDN that was configured as part of the solution deployment.
+4. Validate failover resilency by opening a broswer to `https://shop.example.com`, replacing example.com with the FQDN that was configured as part of the solution deployment.
 
 This can also be validated either programmaticly via API, with the F5 Distributed Cloud console as seen in the attached demo video or simple network tools such as `dig`.
 
