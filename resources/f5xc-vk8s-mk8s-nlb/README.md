@@ -52,7 +52,8 @@ To support this opinionated deployment pattern the following tools, components a
 * [F5XC API Credentials](https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials)
 * [FQDN for Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)
 
-
+>#### *__Note__*
+> *To proceed with the deployment of the solution the nominated FQDN domain or sub domain must be configure as per [Application Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)*
 ---
 ## Installation 
 
@@ -79,7 +80,7 @@ cd $HOME
 git clone https://github.com/aws-ia/terraform-aws-eks-blueprints.git
 ```
 
-3. configure `AWS_PROFILE` environment variables for commandline access.
+3. configure `AWS_PROFILE` environment variables, `aws_access_key_id` & `aws_secret_access_key` in `$HOME/.aws/credentials`, for commandline access.
 
 4. change path to `examples/` directory;
 
@@ -129,21 +130,22 @@ This section details the brief deployment steps to replicate the cloud component
 >#### *__Prerequsite__*
 > *To proceed with the deployment of the solution the nominated FQDN domain or sub domain must be configure as per [Application Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)*
 
-Credit for this work and additional information can be attributed to [Kevin Reynolds](https://github.com/kreynoldsf5) and can be found on [F5DevCentral](https://github.com/f5devcentral/f5xc-shop-demo)
+This solution makes use of [`f5xc-shop-demo`](https://github.com/f5devcentral/f5xc-shop-demo)
+repo found on [F5DevCentral](https://github.com/f5devcentral/).<sup>[1](#refone)</sup>  This work is refactor of [Google's microservices cloud-first application](https://github.com/GoogleCloudPlatform/microservices-demo).
 
 #### *__Tasks__*:
 
-1. First, provision environment variables for `terraform` as outlined  in the [documention.](https://docs.cloud.f5.com/docs/how-to/volterra-automation-tools/terraform)
-
+1. First, provision environment variables for `terraform` as outlined  in the [documention](https://docs.cloud.f5.com/docs/how-to/volterra-automation-tools/terraform),
+_e.g._;
 ```sh
 export VOLT_API_P12_FILE=$HOME/file/location/api_cred.p12
 export VOLT_API_URL=https://(tenant).console.ves.volterra.io/api
 export VES_P12_PASSWORD="SuperSecret"
 ```
 
-> **_Variables:_** *Variables need to be set for deployment, this change can be made to the `variables.tf` file directly, create an `override.tf`, use a [tfvars file](https://www.terraform.io/language/values/variables#variable-definitions-tfvars-files) or [TF_VAR_ environment variables](https://www.terraform.io/cli/config/environment-variables#tf_var_name).  Throughout this deployment solution it will use local `<name>.tfvars` varible files.*
+> **_Variables_**  *need to be set for deployment, modifications can be made to the `variables.tf` file, creatation of `override.tf` or use of a [tfvars file](https://www.terraform.io/language/values/variables#variable-definitions-tfvars-files) or [TF_VAR_ environment variables](https://www.terraform.io/cli/config/environment-variables#tf_var_name).  Throughout this deployment solution it will use local `<name>.tfvars` variable files.*
 
-2. Next, create `TFVARS` file for deployment as per example, updating both `base` and `app_fqdn` for Domain delegation:
+2. Next, create `TFVARS` file for deployment as per example, updating both `base` and `app_fqdn` for Domain delegation, _e.g_;
 
 ```json
 // API Creds
@@ -299,3 +301,7 @@ PRs accepted.
 ## License
 
 [Apache](../LICENSE)
+
+## Credits
+
+<a name="refone">[1]</a> - [Kevin Reynolds](https://github.com/kreynoldsf5)
