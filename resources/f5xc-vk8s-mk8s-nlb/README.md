@@ -5,12 +5,11 @@
 
 ## Table of Contents
 
-- [Security](#security)
 - [Background](#background)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-    - [AWS](#aws_install)
-    - [F5XC](#f5xc_install)
+    - [AWS EKS](#aws-eks)
+    - [F5XC vK8s](#f5xc-vk8s)
 - [Configuration](#configuration)
   - [AWS EKS](#eks)
   - [F5XC mK8S](#mk8s)
@@ -18,16 +17,11 @@
 - [Decommission](#decommission)
   - [AWS](#aws)
   - [F5XC](#f5xc)
-- [API](#api)
 - [TODO](#todo)
 - [Contributing](#contributing)
 - [License](#license)
 ---
-## Security
 
-TBC
-
----
 ## Background
 
 As our customers’ successful business outcomes more and more rely on successful application deployments, the ability to reduce time-to-market while increasing application resilience and availability has become paramount. Kubernetes usage has become mainstream, along with adoption of automation-enabling APIs. 
@@ -56,7 +50,7 @@ To support this opinionated deployment pattern the following tools, components a
 * [AWS CLI](https://aws.amazon.com/cli/) access.
 * [AWS Access Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)
 * [F5XC API Credentials](https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials)
-* [FQDN Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)
+* [FQDN for Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)
 
 
 ---
@@ -65,7 +59,7 @@ To support this opinionated deployment pattern the following tools, components a
 This section outlines the deployment of both AWS example [EKS architecture](https://aws-ia.github.io/terraform-aws-eks-blueprints/v4.20.0/) alongside F5XC [vK8S deployment](https://docs.cloud.f5.com/docs/how-to/app-management/vk8s-deployment) 
 in the aid of demonstrating cluster namespace residency leveraging [Google's microservices cloud-first application](https://github.com/GoogleCloudPlatform/microservices-demo)
 
-### *AWS EKS Deployment*
+### *AWS EKS*
 
 This section details the brief deployment steps to replicate the cloud component using the AWS EKS Deployment blueprints, as seen in the diagram above, in demostration of k8s namespace resilency.  
 
@@ -85,7 +79,7 @@ cd $HOME
 git clone https://github.com/aws-ia/terraform-aws-eks-blueprints.git
 ```
 
-3. Provision `AWS_PROFILE` && `AWS_REGION` environment vars
+3. configure `AWS_PROFILE` environment variables for commandline access.
 
 4. change path to `examples/` directory;
 
@@ -93,38 +87,34 @@ git clone https://github.com/aws-ia/terraform-aws-eks-blueprints.git
 cd $HOME/terraform-aws-eks-blueprints/examples/eks-cluster-with-new-vpc
 ```
 
-5. At time of writing - modify [AWS_REGION](https://github.com/aws-ia/terraform-aws-eks-blueprints/blob/main/examples/eks-cluster-with-new-vpc/main.tf#L34) to reflect deployment region
-
-> *Note: an updated example file can be found located in [src/aws-eks-blueprint/main.tf](src/aws-eks-blueprint/main.tf)*
-
-6. Initialise terraform, to download and prepared modules:
+5. Initialise terraform, to download and prepared modules:
 
 ```sh
 terraform init
 ```
   
-7. Validate `TFVARS` and configuration and deployment:
+6. Validate `TFVARS` and configuration and deployment:
 
 ```sh
 terraform validate
 ```
 
-8. Plan the deployment on successful validation, to see deployment steps:
+7. Plan the deployment on successful validation, to see deployment steps:
 
 ```sh
 terraform plan
 ```
 
-9. Apply Terraform plan with auto-approve:
+8. apply Terraform plan with auto-approve:
 
 ```sh
 terraform apply --auto-approve
 ```
 
-10. As per the Terraform output, update the local `.kubeconfig` with AWS EKS.
+9. as per the Terraform output, update the local `.kubeconfig` with AWS EKS.
 
 ```shell
-aws eks --region $AWS_REGION update-kubeconfig --name <cluster_name>
+aws eks --region us-east-1 update-kubeconfig --name <cluster_name>
 ``` 
 
 
@@ -132,18 +122,18 @@ aws eks --region $AWS_REGION update-kubeconfig --name <cluster_name>
 
 This is also covered briefly in the following video, [AWS EKS Deployment.](videos/k8s-usecase-vid01raw_v01.mkv)
 
+### *F5XC vK8s*
 
-### *F5 DistributedCloud (XC) Virtual Kubenetes (vK8S) Deployment*
+This section details the brief deployment steps to replicate the cloud component using the a reference example of F5 Distributed Cloud (XC) Virtual K8s (vK8s) deployment, as seen in the diagram above, in demostration of k8s namespace resilency.  
 
-This section details the brief deployment steps to replicate the cloud component using the a reference example of F5XC vK8S deployment, as seen in the diagram above, in demostration of k8s namespace resilency.  
+>#### *__Prerequsite__*
+> *To proceed with the deployment of the solution the nominated FQDN domain or sub domain must be configure as per [Application Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)*
 
-Credit for this work and additional information can be attributed to [Kevin Reynolds](https://github.com/kreynoldsf5) and found on [F5DevCentral](https://github.com/f5devcentral/f5xc-shop-demo)
-
-> **_Variables:_** *Variables need to be set for deployment, this change can be made to the `variables.tf` file directly, create an `override.tf`, use a [tfvars file](https://www.terraform.io/language/values/variables#variable-definitions-tfvars-files) or [TF_VAR_ environment variables](https://www.terraform.io/cli/config/environment-variables#tf_var_name).  Throughout this deployment solution it will use local `<name>.tfvars` varible files.*
+Credit for this work and additional information can be attributed to [Kevin Reynolds](https://github.com/kreynoldsf5) and can be found on [F5DevCentral](https://github.com/f5devcentral/f5xc-shop-demo)
 
 #### *__Tasks__*:
 
-1. First, provision environment vars for `terraform` as [documented;](https://docs.cloud.f5.com/docs/how-to/volterra-automation-tools/terraform)
+1. First, provision environment variables for `terraform` as outlined  in the [documention.](https://docs.cloud.f5.com/docs/how-to/volterra-automation-tools/terraform)
 
 ```sh
 export VOLT_API_P12_FILE=$HOME/file/location/api_cred.p12
@@ -151,7 +141,9 @@ export VOLT_API_URL=https://(tenant).console.ves.volterra.io/api
 export VES_P12_PASSWORD="SuperSecret"
 ```
 
-2. Next, create `TFVARS` file for deployment as per example:
+> **_Variables:_** *Variables need to be set for deployment, this change can be made to the `variables.tf` file directly, create an `override.tf`, use a [tfvars file](https://www.terraform.io/language/values/variables#variable-definitions-tfvars-files) or [TF_VAR_ environment variables](https://www.terraform.io/cli/config/environment-variables#tf_var_name).  Throughout this deployment solution it will use local `<name>.tfvars` varible files.*
+
+2. Next, create `TFVARS` file for deployment as per example, updating both `base` and `app_fqdn` for Domain delegation:
 
 ```json
 // API Creds
@@ -166,19 +158,14 @@ app_fqdn = "shop.example.com"
 registry_server = "some.registry.example"
 registry_config_json = "base64.json"
 
-// F5XC AUS Site selection
-spoke_site_selector = ["ves.io/siteName in (ves-io-sy5-syd, ves-io-me1-mel)"]
-hub_site_selector =  ["ves.io/siteName in (ves-io-sy5-syd)"]
-utility_site_selector = ["ves.io/siteName in (ves-io-sy5-syd)"]
-
 // Bot Defense Enabled
 enable_bot_defense = true
-bot_defense_region = "Asia"
 enable_synthetic_monitors = true
 enable_client_side_defense = true
 ```
 
-> **_Note:_** *This deploys to the APAC F5XC region as indicated within comments, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.
+> **_Note:_** *This deploys to the US F5XC region as indicated within comments, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.*
+
 
 3. Change directory to F5XC shop deployment:
 
