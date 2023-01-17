@@ -156,3 +156,8 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_app_url"></a> [app\_url](#output\_app\_url) | FQDN VIP to access the web app |
+
+
+## TODO 
+- [ ] move versions/providers to external file
+- [ ] update versions and paths for templates (modules and miscellaneous)
