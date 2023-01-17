@@ -21,12 +21,14 @@ Find out more about adaptive applications on [F5's Website](https://www.f5.com/c
 | Solution | Category | Description | Resources |
 | -------- | -------- |----------- | --------- |
 | [Deploy API to NGINX Management Suite](solutions/deploy-api-to-f5-nginx-management-suite) | Performance | Use a CI/CD pipeline to publish and update API routing and developer documentation | [F5 NGINX Management Suite](resources/f5-nginx-management-suite) |
+| [Multi-Cluster Application Resilience](solutions/k8s-mutlicluster-resilency/)| Performance | Leveraging F5 DistributedCloud to provide Kubenetes microservices application resilency | [Deployment Example](resources/f5xc-vk8s-mk8s-nlb/)
 
 ## Resource Inventory
 
 | Resource | Description | Used By |
 | -------- | ----------- | ------- |
 | [F5 NGINX Management Suite](resources/f5-nginx-management-suite) | Terraform and Ansible artifacts to deploy F5 NGINX Management Suite to virtual machines | [Deploy API to NGINX Management Suite](solutions/deploy-api-to-f5-nginx-management-suite) |
+| [F5 DistributedCloud & AWS EKS](resources/f5xc-vk8s-mk8s-nlb/) | Deployment instructions and artifcats to demonstrate Kubenetes mutli-cluster resilency | [Multi-Cluster Application Resilience](solutions/k8s-mutlicluster-resilency/) |
 
 ## Support
 
