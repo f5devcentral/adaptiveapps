@@ -26,7 +26,7 @@
 
 As our customers’ successful business outcomes more and more rely on successful application deployments, the ability to reduce time-to-market while increasing application resilience and availability has become paramount. Kubernetes usage has become mainstream, along with adoption of automation-enabling APIs. 
 
-Gone are the days where customers would deploy their monolithic applications to a single on-prem data center. With the advent of microservices, virtual machines, containers, and private / public cloud, our customer deployments have evolved into a much more complicated state involving a hybrid of many of these technologies. While deployments may have become more complicated and, ironically, automated, application resiliency and availability is still the most important business-focused requirement. 
+Gone are the days when customers would deploy their monolithic applications to a single on-prem data center. With the advent of microservices, virtual machines, containers, and private / public cloud, our customer deployments have evolved into a much more complicated state involving a hybrid of many of these technologies. While deployments may have become more complicated and, ironically, automated, application resiliency and availability is still the most important business-focused requirement. 
 
 Customers require the ability to deploy on-prem workloads with F5 application services, with an automated way to migrate these to private / public cloud and/or F5 Distributed Cloud (F5XC) in order to provide a seamless end-user failover experience in case of system unavailability. End users should not be aware nor impacted by any level of application outage. Correspondingly, the business should not be impacted by such outages either in terms of revenue generation, customer-facing services and support, etc.
 
@@ -118,16 +118,50 @@ terraform apply --auto-approve
 aws eks --region us-east-1 update-kubeconfig --name <cluster_name>
 ``` 
 
+10. go home, again:
 
+```shell
+cd $HOME
+```
+
+10. Clond the GCP microservices-demo 
+
+```shell
+git clone https://github.com/GoogleCloudPlatform/microservices-demo
+```
+
+11. change path for the OnlineShop manifest
+
+```shell
+cd microservices-demo/release
+```
+
+12. then an application deployment using `kubectl` that will deploy the shop,
+
+```shell
+kubectl apply -f kubernetes-manifests.yaml
+```
+
+13. to confirm deployment,
+
+```shell
+kubectl get pods -o=wide -n=default
+```
+    
+14. Access the web frontend in a browser using the frontend's `EXTERNAL_IP`;
+```shell
+kubectl get service frontend-external | awk '{print $4}'
+```
+    
 #### *__Deployment Video__*
 
-This is also covered briefly in the following video, [AWS EKS Deployment.](videos/k8s-usecase-vid01raw_v01.mkv)
+This is also covered briefly in the following video, [AWS EKS Deployment.](images/k8s-usecase-vid01.mkv)
 
 ### *F5XC vK8s*
 
 This section details the brief deployment steps to replicate the cloud component using the a reference example of F5 Distributed Cloud (XC) Virtual K8s (vK8s) deployment, as seen in the diagram above, in demostration of k8s namespace resilency.  
 
->#### *__Prerequsite__*
+>#### *__Prerequisite__*
 > *To proceed with the deployment of the solution the nominated FQDN domain or sub domain must be configure as per [Application Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)*
 
 This solution makes use of [`f5xc-shop-demo`](https://github.com/f5devcentral/f5xc-shop-demo)
@@ -168,7 +202,6 @@ enable_client_side_defense = true
 
 > **_Note:_** *This deploys to the US F5XC Region, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.*
 
-
 3. Change directory to F5XC shop deployment:
 
 ```sh
@@ -201,94 +234,124 @@ terraform apply --auto-approve --var-file=$HOME/terraform.tfvars
 
 #### *__Deployment Video__*
 
-This is also covered in the following video, [F5XC vK8S deployment.](videos/k8s-usecase-vid01raw_v01.mkv)
+This is also covered in the following video, [F5XC vK8S deployment.](images/k8s-usecase-vid02.mkv)
 
 ---
 
 ## Configuration
 
-Deployment of microservices demo app:
-
-### AWS EKS
-
-1. `git clone https://github.com/GoogleCloudPlatform/microservices-demo`
-1. `cd microservices-demo/release` for the OnlineShop manifest
-2. `kubectl apply -f kubernetes-manifests.yaml` that will deploy the shop, to confirm,
-    - `kubectl get pods -o=wide -n=default`
-3. Access the web frontend in a browser using the frontend's `EXTERNAL_IP`.
-    - `kubectl get service frontend-external | awk '{print $4}'`
-
 ### F5XC mK8S
 
-This is a quick as-built for managed k8s (addition of EKS microservices):
+In this section we deploy and configure managed kubernetes for F5 distribution cloud,   
 
 1. create a k8s as per [docs](https://docs.cloud.f5.com/docs/how-to/site-management/create-k8s-site)
-    - `git clone https://gitlab.wirelessravens.org/f5labs/aatt.git`
-    - `cd f5labs/aatt/k8s-usecase/src/terraform/aws-environment/aws-f5xc-mk8s`
-    - confirm the token/uuid is the same as the file named `ce_mk8s.yaml`
-    -`kubectl apply -f ce_mk8s.yaml` as per the guide
+
+```shell
+> git clone https://gitlab.wirelessravens.org/f5labs/aatt.git
+> cd f5labs/aatt/k8s-usecase/src/terraform/aws-environment/aws-f5xc-mk8s
+```
+
+2. confirm the token/uuid is the same as the file named `ce_mk8s.yaml`
+
+3. then a kubentes control apply,
+
+```shell
+kubectl apply -f ce_mk8s.yaml
+```
+   
 2. create a service discovery policy as per [docs](https://docs.cloud.f5.com/docs/how-to/app-networking/service-discovery-k8s)
-3. add the follow:
+
+3. create an new origin pool using the AWS EKS services discovered, via the console:
     - [origin pool & heath check](https://docs.cloud.f5.com/docs/how-to/app-networking/origin-pools)
-    - clone vk8s f5xc TF code for this one?
-    - AWS EKS is HTTP and **NOT** HTTPS
-4. add origin pool for AWS EKS to vk8s LB (deployment-fe)
+   
+> *Note: AWS EKS is HTTP and **NOT** HTTPS*
+
+4. finally add the Origin Pool to the existing `shop` [HTTP Application Load Balancer](https://docs.cloud.f5.com/docs/how-to/app-networking/origin-pools)
+
+#### *__Deployment Video__*
+
+This is also covered in the following video, [F5XC mK8S deployment.](images/k8s-usecase-vid03.mkv)
 
 ---
 ## Decommission
 
 It is recommended to decommission this deployment to both not incur additional costs or consume resources. The correct workflow to achieve this is to:
-* namespace integration removal
-* mK8S integration removal
-* microservices application rollback
+
+* k8s namespace integration rollback
+* mK8S integration deployment rollback
+* microservices application deployment rollback
 * decommission both;
   * AWS EKS
   * F5XC vK8S
 
 The steps to achieve this are outlined in the following sections
 
-
 ### *Namespace Integration Removal* 
+
+These steps are performed via the F5 Distributed Cloud console:
 
 1. remove the aws eks [origin pool & heath check](https://docs.cloud.f5.com/docs/how-to/app-networking/origin-pools) from Application Load Balancer
 2. delete service discovery policy created during installation as per [docs](https://docs.cloud.f5.com/docs/how-to/app-networking/service-discovery-k8s)
 
-
 ### *mK8S Integration Removal*
 
-1. Decommission EKS clusters from Other Registrations
+To remove the Managed Kubernetes AWS EKS integration;
+
+1. Within the F5 Distributed Cloud Decommission EKS clusters from [Other Registrations](https://docs.cloud.f5.com/docs/how-to/site-management/manage-site);
     - Home -> Cloud and Edge Sites -> Manage -> Site Management
-2. Delete k8s deployment of managed k8s
-    - `cd f5labs/aatt/k8s-usecase/src/terraform/aws-environment/aws-f5xc-mk8s`
+   
+2. Delete k8s deployment of managed k8s from the command line,
+    - change path to the supplied manifest
+   
+```shell
+> cd f5devcentral/adaptive-applications-cookbook/resources/f5xc-aws-mk8s-eks
+```
+
+3. Deleting the deployment of mK8s to AWS EKS
     - `kubectl delete -f ce_mk8s.yaml`
 
 
 ### *Microservices Application Rollback* 
 
-1. `cd $HOME/microservices-demo/release` for the OnlineShop manifest
-2. `kubectl delete -f kubernetes-manifests.yaml` that will deploy the shop, to confirm,
+1. change path to manifest file;
+```shell
+cd $HOME/microservices-demo/release
+```
+
+2. delete the microservices deployment;
+```shell
+kubectl delete -f kubernetes-manifests.yaml
+``` 
+
+3. to confirm deployment deletion,
     - `kubectl get pods -o=wide -n=default`
 
 
-#### *HowTo - Rollback (microservices vk8s f5xc)*
+#### *F5XC Virtual Kubernetes Rollback (microservices vk8s f5xc)*
+
+The following steps are required to rollback the microservices hosted in F5 DistributedCloud;
+
 1. provision environment vars for `terraform`
+
 ```sh
 export VOLT_API_P12_FILE=$HOME/file/location/api_cred.p12
 export VOLT_API_URL=https://tenant.console.ves.volterra.io/api
 export VES_P12_PASSWORD="SuperSecret"
 ```
+
 3. change directory to F5XC shop deployment:
     - `cd $HOME/f5xc-shop-demo`
+   
 4. initialise terraform with previous build `TFVARS`:
     - `terraform init --upgrade`
+   
 7. destroy plan:
     - `terraform destroy --auto-approve --var-file=$HOME/f5xc_shop.tfvars`
 
 ---
 ## TODO
 
-- [ ] Config & decommission instruction build out.
-- [ ] add screen shots, or `curl` commands for f5xc http-lb updates
+- [ ] pipelines for TF/cli curl.
 
 ---
 ## Contributing

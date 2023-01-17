@@ -38,7 +38,7 @@ Then automated failover or isolation of site happens
 ```
 
 ## Demo
-![Demo Video](videos/k8s-usecase-vid04raw_v04.mkv)
+![Demo Video](images/k8s-usecase-vid04.mkv)
 
 ## Demostration of the Solution
 
