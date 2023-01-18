@@ -7,7 +7,7 @@ resource "kubernetes_config_map_v1" "nginx_conf" {
     }
   }
   data = {
-    "default.conf" = templatefile("${path.root}/f5xc-shop-demo/misc/nginx_conf.tpl", {
+    "default.conf" = templatefile("${path.root}/misc/nginx_conf.tpl", {
       enable_client_side_defense = var.enable_client_side_defense
     })
   }
@@ -22,7 +22,7 @@ resource "kubernetes_config_map_v1" "error_html" {
     }
   }
   data = {
-    "error.html" = file("${path.root}/f5xc-shop-demo/misc/error.html")
+    "error.html" = file("${path.root}/misc/error.html")
   }
 }
 
