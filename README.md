@@ -1,3 +1,7 @@
+[![license](https://img.shields.io/github/license/:f5devcentral/:adaptiveapps)](LICENSE)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![commit-activity](https://img.shields.io/github/commit-activity/m/f5devcentral/adaptiveapps)
+
 # Adaptive Applications Cookbook
 
 This repository contains recipes and examples to help F5 customers realize the benefits of adaptive applications.
