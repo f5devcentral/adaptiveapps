@@ -38,6 +38,7 @@ Find out more about adaptive applications on [F5's Website](https://www.f5.com/c
 
 The contents of this repository are meant to serve as examples and are not covered by F5 support.
 If you come across a bug or other issue when using these recipes, please open a GitHub issue to help our team keep track of content that needs improvement.
+
 Note, the code in this repository is community supported and is not supported by F5 Inc.  For a complete list of supported projects please reference [SUPPORT.md](SUPPORT.md).
 
 ## Community Code of Conduct
