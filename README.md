@@ -1,6 +1,6 @@
 [![license](https://img.shields.io/github/license/:f5devcentral/:adaptiveapps)](LICENSE)
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-[![commit-activity](https://img.shields.io/github/commit-activity/m/f5devcentral/adaptiveapps)](//img.shields.io/github/commit-activity/m/f5devcentral/adaptiveapps)
+[![commit-activity](https://img.shields.io/github/commit-activity/m/f5devcentral/adaptiveapps)](https://github.com/f5devcentral/adaptiveapps/commits)
+[![Stars](https://img.shields.io/github/stars/f5devcentral?style=social)](https://github.com/f5devcentral)
 
 # Adaptive Applications Cookbook
 
