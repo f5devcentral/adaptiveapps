@@ -353,17 +353,30 @@ export VES_P12_PASSWORD="SuperSecret"
 
 - [ ] pipelines for TF/cli curl.
 
----
-## Contributing
 
-See [the contributing file](CONTRIBUTING.md)!
+## Support
 
-PRs accepted.
+The contents of this repository are meant to serve as examples and are not covered by F5 support.
+If you come across a bug or other issue when using these recipes, please open a GitHub issue to help our team keep track of content that needs improvement.
+Note, the code in this repository is community supported and is not supported by F5 Inc.  For a complete list of supported projects please reference [SUPPORT.md](SUPPORT.md).
 
----
+## Community Code of Conduct
+
+Please refer to the [F5 DevCentral Community Code of Conduct](code_of_conduct.md).
+
 ## License
 
-[Apache](../LICENSE)
+The contents of this repository are made available under two license.
+All documentation, specifically any Markdown files, is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
+Everything else is licensed under [Apache 2.0](LICENSE).
+
+## Copyright
+
+Copyright 2014-2022 F5 Networks Inc.
+
+## Contributing
+
+See [the contributing file](../../CONTRIBUTING.md)!
 
 ## Credits
 
