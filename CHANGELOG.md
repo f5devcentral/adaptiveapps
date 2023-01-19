@@ -23,5 +23,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - removed
 
 <!-- TODO: fix links
-[0.0.1]: https://gitlab.wirelessravens.org/merps/aatt/releases/tag/v0.0.1
+[0.0.1]: https://github.com/f5devcentral/adaptiveapps/releases/tag/v0.0.1
 -->

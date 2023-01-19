@@ -1,6 +1,5 @@
 [![license](https://img.shields.io/github/license/f5devcentral/adaptiveapps)](LICENSE)
 [![commit-activity](https://img.shields.io/github/commit-activity/m/f5devcentral/adaptiveapps)](https://github.com/f5devcentral/adaptiveapps/commits)
-[![Stars](https://img.shields.io/github/stars/f5devcentral?style=social)](https://github.com/f5devcentral)
 
 # Adaptive Applications Cookbook
 
