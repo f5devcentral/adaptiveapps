@@ -1,6 +1,6 @@
 # Multi-Cluster Kubernetes Workload Migration and Failover Resiliency
 
-[![license](https://img.shields.io/github/license/:f5devcentral/:adaptiveapps)](LICENSE)
+[![license](https://img.shields.io/github/license/f5devcentral/adaptiveapps)](../../LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 ## Table of Contents
@@ -149,6 +149,7 @@ kubectl get pods -o=wide -n=default
 ```
     
 14. Access the web frontend in a browser using the frontend's `EXTERNAL_IP`;
+
 ```shell
 kubectl get service frontend-external | awk '{print $4}'
 ```
@@ -171,6 +172,7 @@ repo found on [F5DevCentral](https://github.com/f5devcentral/).<sup>[1](#refone)
 
 1. First, provision environment variables for `terraform` as outlined  in the [documention](https://docs.cloud.f5.com/docs/how-to/volterra-automation-tools/terraform),
 _e.g._;
+
 ```sh
 export VOLT_API_P12_FILE=$HOME/file/location/api_cred.p12
 export VOLT_API_URL=https://(tenant).console.ves.volterra.io/api
@@ -200,33 +202,47 @@ enable_synthetic_monitors = true
 enable_client_side_defense = true
 ```
 
-> **_Note:_** *This deploys to the US F5XC Region, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.*
+> **_Note:_** 
+> *This deploys to the US F5XC Region, please refer to [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges and regions.*
 
-3. Change directory to F5XC shop deployment:
+3. Clone the [F5XC Shop Demo](https://github.com/f5devcentral/f5xc-shop-demo)
+
+```shell
+> cd $HOME
+> git clone https://github.com/f5devcentral/f5xc-shop-demo.git
+```
+
+4. Copy the F5 DistributedCloud API p12 bundle file into the `creds/` path;
+
+```shell
+> cp api_cred.p12 $HOME/f5xc-shop-demo/creds
+```
+
+5. Change directory to F5XC shop deployment:
 
 ```sh
 cd $HOME/src/f5xc-shop-demo/
 ```
 
-4. Initialise terraform, to download and prepared modules:
+6. Initialise terraform, to download and prepared modules:
 
 ```sh
 terraform init
 ```
   
-5. Validate `TFVARS` and configuration and deployment:
+7. Validate `TFVARS` and configuration and deployment:
 
 ```sh
 terraform validate
 ```
 
-6. Plan the deployment on successful validation, just to be sure:
+8. Plan the deployment on successful validation, just to be sure:
 
 ```sh
 terraform plan --var-file=$HOME/terraform.tfvars
 ```
 
-7. Finally, apply Terraform plan with auto-approve to avoid the `[y]` confirmation request _(you validated right?)_:
+9. Finally, apply Terraform plan with auto-approve to avoid the `[y]` confirmation request _(you validated right?)_:
 
 ```sh
 terraform apply --auto-approve --var-file=$HOME/terraform.tfvars
@@ -358,17 +374,17 @@ export VES_P12_PASSWORD="SuperSecret"
 
 The contents of this repository are meant to serve as examples and are not covered by F5 support.
 If you come across a bug or other issue when using these recipes, please open a GitHub issue to help our team keep track of content that needs improvement.
-Note, the code in this repository is community supported and is not supported by F5 Inc.  For a complete list of supported projects please reference [SUPPORT.md](SUPPORT.md).
+Note, the code in this repository is community supported and is not supported by F5 Inc.  For a complete list of supported projects please reference [SUPPORT.md](../../SUPPORT.md).
 
 ## Community Code of Conduct
 
-Please refer to the [F5 DevCentral Community Code of Conduct](code_of_conduct.md).
+Please refer to the [F5 DevCentral Community Code of Conduct](../../code_of_conduct.md).
 
 ## License
 
 The contents of this repository are made available under two license.
 All documentation, specifically any Markdown files, is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
-Everything else is licensed under [Apache 2.0](LICENSE).
+Everything else is licensed under [Apache 2.0](../../LICENSE).
 
 ## Copyright
 
