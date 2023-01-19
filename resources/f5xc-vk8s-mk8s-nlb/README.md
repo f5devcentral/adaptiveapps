@@ -221,7 +221,7 @@ enable_client_side_defense = true
 5. Change directory to F5XC shop deployment:
 
 ```sh
-cd $HOME/src/f5xc-shop-demo/
+cd $HOME/f5xc-shop-demo
 ```
 
 6. Initialise terraform, to download and prepared modules:
