@@ -156,7 +156,7 @@ kubectl get service frontend-external | awk '{print $4}'
     
 #### *__Deployment Video__*
 
-This is also covered briefly in the following video, [AWS EKS Deployment.](images/k8s-usecase-vid01.mkv)
+This is also covered briefly in the following video, [AWS EKS Deployment.](https://www.youtube.com/watch?v=GDjsGattF9M&t=288s)
 
 ### *F5XC vK8s*
 
@@ -250,7 +250,7 @@ terraform apply --auto-approve --var-file=$HOME/terraform.tfvars
 
 #### *__Deployment Video__*
 
-This is also covered in the following video, [F5XC vK8S deployment.](images/k8s-usecase-vid02.mkv)
+This is also covered in the following video, [F5XC vK8S deployment.](https://www.youtube.com/watch?v=GDjsGattF9M&t=634s)
 
 ---
 
@@ -286,7 +286,7 @@ kubectl apply -f ce_mk8s.yaml
 
 #### *__Deployment Video__*
 
-This is also covered in the following video, [F5XC mK8S deployment.](images/k8s-usecase-vid03.mkv)
+This is also covered in the following video, [F5XC mK8S deployment.](https://www.youtube.com/watch?v=GDjsGattF9M&t=754s)
 
 ---
 ## Decommission
