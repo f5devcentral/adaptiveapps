@@ -19,7 +19,7 @@ Then the API documentation in the Dev Portal is updated
 ```
 
 ## Demo
-![Demo Video](images/demo.mp4)
+[![Video](https://img.youtube.com/vi/2fRqVYpZOK4/maxresdefault.jpg)](https://www.youtube.com/watch?v=2fRqVYpZOK4&t=519s)
 
 ## Automation to Deploy Solution
 Automation is done using Ansible.
