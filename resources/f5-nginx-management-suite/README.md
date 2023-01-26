@@ -19,7 +19,7 @@ The Developer Portal from Management Suite provides a common location to publish
 This can help reduce the time to learn new APIs and reduce the risk of creating duplicate APIs.
 
 ## Demo
-![Demo Video](images/demo.mp4)
+[![Video](https://img.youtube.com/vi/2fRqVYpZOK4/maxresdefault.jpg)](https://www.youtube.com/watch?v=2fRqVYpZOK4&t=225s)
 
 ## Automation to Deploy Solution
 
