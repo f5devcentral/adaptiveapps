@@ -3,15 +3,15 @@
 ## Solution Description
 <img src="images/vk8s-use-case.png" width="768">
 
-This solution example demostrates automated kubenetes application namespace failover leveraging F5 Distributed Cloud, specificlly, the following components of Application Management:
+This solution example demonstrates automated Kubernetes application namespace failover leveraging F5 Distributed Cloud, specifically, the following components of Application Management:
 
 * [Domain Delegation](https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation)
-* [Virtual Kubenetes](https://docs.cloud.f5.com/docs/how-to/app-management/vk8s-deployment)
+* [Virtual Kubernetes](https://docs.cloud.f5.com/docs/how-to/app-management/vk8s-deployment)
 * [HTTP Load Balancers](https://docs.cloud.f5.com/docs/how-to/app-networking/http-load-balancer)
 
-That extends into, provides resilency for, AWS EKS microservices application workload with F5 Distributed Cloud [Managed K8s](https://docs.cloud.f5.com/docs/how-to/app-management/create-deploy-managed-k8s)
+That extends into, provides resiliency for, AWS EKS microservices application workload with F5 Distributed Cloud [Managed K8s](https://docs.cloud.f5.com/docs/how-to/app-management/create-deploy-managed-k8s)
 
-The solution architecture, along with IaC deployment code and example microservices application, demostrates that with minimal configuration steps and DNS integration.  
+The solution architecture, along with IaC deployment code and example microservices application, demonstrates that with minimal configuration steps and DNS integration.  
 
 Other microservices deployment scenarios that this solution example could be applied too, outside of the scope of this example;
 
@@ -40,7 +40,7 @@ Then automated failover or isolation of site happens
 ## Demo
 [![Video](https://img.youtube.com/vi/GDjsGattF9M/maxresdefault.jpg)](https://www.youtube.com/watch?v=GDjsGattF9M&t=1111s)
 
-## Demostration of the Solution
+## Demonstration of the Solution
 
 To force an incident outside of normal application deployment for this example this can be achieved by simply deleting the AWS EKS Microservices application deployment.
 
@@ -66,7 +66,7 @@ kubectl delete -f release/kubernetes-manifests.yaml
 kubectl get pods -o=wide -n=default
 ```
 
-4. Validate failover resilency by opening a broswer to `https://shop.example.com`, replacing example.com with the FQDN that was configured as part of the solution deployment.
+4. Validate failover resiliency by opening a browser to `https://shop.example.com`, replacing example.com with the FQDN that was configured as part of the solution deployment.
 
-This can also be validated either programmaticly via API, with the F5 Distributed Cloud console as seen in the attached demo video or simple network tools such as `dig`.
+This can also be validated either programmatically via API, with the F5 Distributed Cloud console as seen in the attached demo video or simple network tools such as `dig`.
 
