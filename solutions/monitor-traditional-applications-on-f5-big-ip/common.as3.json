@@ -1,0 +1,58 @@
+{
+  "class": "ADC",
+  "schemaVersion": "3.0.0",
+  "Common": {
+    "class": "Tenant",
+    "Shared": {
+      "class": "Application",
+      "template": "shared",
+      "appTelemetryIRule": {
+        "class": "iRule",
+        "iRule": {
+          "base64": "d2hlbiBSVUxFX0lOSVQgewogICAgc2V0IDo6bWluX2xvZ19pbnRlcnZhbCAxMAogICAgc2V0IDo6dGFibGVfbmFtZSBhcHBfZGF0YQogICAgc2V0IDo6cHVibGlzaGVyICIvQ29tbW9uL1NoYXJlZC90ZWxlbWV0cnlfcHVibGlzaGVyX3JhdyIKCiAgICBzZXQgOjpsYXN0bG9nIDAKfQp3aGVuIEhUVFBfUkVRVUVTVCB7CiAgICBzZXQgdDEgW2Nsb2NrIGNsaWNrcyAtbWlsbGlzZWNvbmRzXTsKfQp3aGVuIEhUVFBfUkVTUE9OU0UgewogICAgc2V0IHQyIFtjbG9jayBjbGlja3MgLW1pbGxpc2Vjb25kc107CiAgICBzZXQgZHVyYXRpb24gW2V4cHIgeyR0MiAtICR0MX1dOwogICAgdGFibGUgYXBwZW5kIC1zdWJ0YWJsZSAkOjp0YWJsZV9uYW1lIFt2aXJ0dWFsXSAiICRkdXJhdGlvbiI7CiAgICBzZXQgbm93IFtjbG9jayBzZWNvbmRzXQoKICAgICMgT25seSBzZW5kIGRhdGEgb24gYSBkZWZpbmVkIGludGVydmFsCiAgICBpZiB7W2V4cHIgeyAoJG5vdyAtICQ6Omxhc3Rsb2cpID4gJDo6bWluX2xvZ19pbnRlcnZhbCB9XX17CgogICAgICAgICMgT3BlbiBhIGNvbm5lY3Rpb24gdG8gYSBQdWJsaXNoZXIKICAgICAgICBzZXQgaHNsIFtIU0w6Om9wZW4gLXB1Ymxpc2hlciAkOjpwdWJsaXNoZXJdCgogICAgICAgICMgSXRlcmF0ZSB0aHJvdWdoIGVhY2ggYXBwbGljYXRpb24KICAgICAgICBmb3JlYWNoIGtleSBbdGFibGUga2V5cyAtc3VidGFibGUgJDo6dGFibGVfbmFtZV0gewogICAgICAgICAgICBzZXQgdmFsdWVzIFt0YWJsZSBsb29rdXAgLXN1YnRhYmxlICQ6OnRhYmxlX25hbWUgJGtleV0KCiAgICAgICAgICAgICMgR2F0aGVyIHJlc3BvbnNlIHRpbWUgbWV0cmljcwogICAgICAgICAgICBzZXQgbWF4IDAKICAgICAgICAgICAgc2V0IG1pbiA5OTk5OTkKICAgICAgICAgICAgc2V0IHRvdGFsIDAuMAogICAgICAgICAgICBzZXQgY291bnQgMAogICAgICAgICAgICBmb3JlYWNoIHZhbHVlICR2YWx1ZXMgewogICAgICAgICAgICAgICAgaWYge1tleHByICR2YWx1ZSA+ICRtYXhdfXsKICAgICAgICAgICAgICAgICAgICBzZXQgbWF4ICR2YWx1ZQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgaWYge1tleHByICR2YWx1ZSA8ICRtaW5dfXsKICAgICAgICAgICAgICAgICAgICBzZXQgbWluICR2YWx1ZQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgc2V0IHRvdGFsIFtleHByICR0b3RhbCArICR2YWx1ZV0KICAgICAgICAgICAgICAgIGluY3IgY291bnQgMQogICAgICAgICAgICB9CiAgICAgICAgICAgIHNldCBhdmcgW2V4cHIgJHRvdGFsIC8gJGNvdW50XQoKICAgICAgICAgICAgIyBQcmVwYXJlIGRhdGEgaW4gSlNPTiBmb3JtYXQKICAgICAgICAgICAgc2V0IGRhdGEgYXBwbGljYXRpb249XCJbdmlydHVhbF1cIixyZXNwb25zZVRpbWVNaW49XCIkbWluXCIscmVzcG9uc2VUaW1lTWF4PVwiJG1heFwiLHJlc3BvbnNlVGltZUF2Zz1cIiRhdmdcIgoKICAgICAgICAgICAgIyBTZW5kIGRhdGEgdG8gYSBQdWJsaXNoZXIKICAgICAgICAgICAgc2V0IHNlbmRfcmVzdWx0IFtIU0w6OnNlbmQgJHtoc2x9ICIke2RhdGF9Il0KICAgICAgICAgICAgaWYge1tleHByICRzZW5kX3Jlc3VsdCA9PSAwXX0gewogICAgICAgICAgICAgICAgbG9nIGxvY2FsMC4gIkZhaWxlZCB0byBzZW5kIGRhdGEgdG8gJHB1Ymxpc2hlciwgcGxlYXNlIGVuc3VyZSB0aGF0IGl0IGlzIG5vdCB1c2luZyBhIGZvcm1hdHRlZCBkZXN0aW5hdGlvbi4iCiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICAgc2V0IDo6bGFzdGxvZyAkbm93CiAgICAgICAgdGFibGUgZGVsZXRlIC1zdWJ0YWJsZSAkOjp0YWJsZV9uYW1lIC1hbGwKICAgIH0KfQ=="
+        }
+      },
+      "telemetryStreamingIRule": {
+        "class": "iRule",
+        "iRule": "when CLIENT_ACCEPTED {\n  node 127.0.0.1 6514\n}"
+      },
+      "telemetryStreamingService": {
+        "class": "Service_TCP",
+        "virtualAddresses": [
+          "255.255.255.254"
+        ],
+        "virtualPort": 6514,
+        "iRules": [
+          "telemetryStreamingIRule"
+        ]
+      },
+      "telemetryStreamingPool": {
+        "class": "Pool",
+        "members": [
+          {
+            "serverAddresses": [
+              "255.255.255.254"
+            ],
+            "servicePort": 6514
+          }
+        ]
+      },
+      "telemetryStreamingLogDestination": {
+        "class": "Log_Destination",
+        "type": "remote-high-speed-log",
+        "protocol": "tcp",
+        "pool": {
+          "use": "telemetryStreamingPool"
+        }
+      },
+      "telemetryStreamingLogPublisher": {
+        "class": "Log_Publisher",
+        "destinations": [
+          {
+            "use": "telemetryStreamingLogDestination"
+          }
+        ]
+      }
+    }
+  }
+}

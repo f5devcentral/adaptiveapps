@@ -1,0 +1,31 @@
+{
+  "class": "Telemetry",
+  "Controls": {
+    "class": "Controls",
+    "logLevel": "debug"
+  },
+  "poller": {
+    "class": "Telemetry_System_Poller",
+    "interval": 10,
+    "endpointList": [
+      {
+        "protocol": "http",
+        "path": "mgmt/tm/ltm/profile/http/stats?$select=resp_2xxCnt,resp_4xxCnt,resp_5xxCnt,tmName",
+        "name": "responseCodes"
+      }
+    ]
+  },
+  "eventListener": {
+    "class": "Telemetry_Listener",
+    "port": 6514
+  },
+  "otlpConsumer": {
+    "class": "Telemetry_Consumer",
+    "type": "OpenTelemetry_Exporter",
+    "host": "aee36e2d4657b4f57b59fd1fadd35e0f-1850889579.us-west-2.elb.amazonaws.com",
+    "metricsPath": "/v1/metrics",
+    "port": 80,
+    "protocol": "http",
+    "exporter": "json"
+  }
+}
