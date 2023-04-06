@@ -117,65 +117,95 @@ As an advanced use case, Telemetry Streaming expects this custom data to be in a
 * Values must have quotation marks
 * It is best to avoid any spaces in this string
 
+Additionally, this iRule can optionally collect data by country code.
+This allows a user to monitor data by region to inform resource distribution decisions.
 Below is the full iRule being used for this example.
 It is base64 encoded in the AS3 declaration to make it easier to embed in the JSON payload.
 Following this pattern, you can create iRules that can gather a wide variety of traffic data.
 
 ```tcl
 when RULE_INIT {
-    set ::min_log_interval 10
-    set ::table_name app_data
-    set ::publisher "/Common/Shared/telemetry_publisher"
+    set static::metric_table_name traffic_data
+    set static::publisher "/Common/Shared/telemetry_publisher"
 
-    set ::lastlog 0
-}
-when HTTP_REQUEST {
-    set t1 [clock clicks -milliseconds];
+    # Shortest interval (in seconds) to log a message
+    set static::min_log_interval 10
+    set static::last_log_key "last_log_timestamp"
+
+    set static::enable_geoip_data 1
+    set static::invalid_country_code "ZZ"
 }
 when HTTP_RESPONSE {
-    set t2 [clock clicks -milliseconds];
-    set duration [expr {$t2 - $t1}];
-    table append -subtable $::table_name [virtual] " $duration";
+    set key "[virtual]"
+
+    # Gather location data
+    if {[expr {$static::enable_geoip_data == 1}]} {
+        set ipaddr [IP::client_addr]
+        set country [whereis $ipaddr country]
+        if {[expr {$country eq ""}]} {
+            set country $static::invalid_country_code
+        }
+        set key "$key:$country"
+    }
+
+    table append -subtable $static::metric_table_name $key " [expr {[TCP::rtt] / 32.0}]";
+
+    set lastlog [table lookup $static::last_log_key]
     set now [clock seconds]
+    if { $lastlog equals "" } {
+        # This is the first execution so create the table entry and force a log attempt
+        table add $static::last_log_key $now
+        set lastlog 0
+    }
 
     # Only send data on a defined interval
-    if {[expr { ($now - $::lastlog) > $::min_log_interval }]}{
-
+    if {[expr { ($now - $lastlog) > $static::min_log_interval }]} {
         # Open a connection to a Publisher
-        set hsl [HSL::open -publisher $::publisher]
-
+        set hsl [HSL::open -publisher $static::publisher]
         # Iterate through each application
-        foreach key [table keys -subtable $::table_name] {
-            set values [table lookup -subtable $::table_name $key]
+        foreach key [table keys -subtable $static::metric_table_name] {
 
+            set key_parts [split $key :]
+            set application [lindex $key_parts 0]
+            set country [lindex $key_parts 1]
+
+            set values [table lookup -subtable $static::metric_table_name $key]
             # Gather response time metrics
             set max 0
-            set min 999999
+            set min indef
             set total 0.0
             set count 0
             foreach value $values {
-                if {[expr $value > $max]}{
+                if {[expr {$value > $max}]}{
                     set max $value
                 }
-                if {[expr $value < $min]}{
+                if {[expr {$value < $min}]}{
                     set min $value
                 }
-                set total [expr $total + $value]
+                set total [expr {$total + $value}]
                 incr count 1
             }
-            set avg [expr $total / $count]
+
+            if {[expr {$count == 0}]} {
+                continue
+            }
+
+            set avg [expr {$total / $count}]
 
             # Prepare data in JSON format
-            set data application=\"[virtual]\",responseTimeMin=\"$min\",responseTimeMax=\"$max\",responseTimeAvg=\"$avg\"
+            set data application=\"$application\",rttTimeMin=\"$min\",rttTimeMax=\"$max\",rttTimeAvg=\"$avg\"
+            if {[expr {$static::enable_geoip_data == 1}]} {
+                set data "$data,country=\"$country\""
+            }
 
             # Send data to a Publisher
             set send_result [HSL::send ${hsl} "${data}"]
-            if {[expr $send_result == 0]} {
-                log local0. "Failed to send data to $publisher, please ensure that it is not using a formatted destination."
+            if {[expr {$send_result == 0}]} {
+                log local0. "Failed to send data to $static::publisher, please ensure that it is not using a formatted destination."
             }
         }
-        set ::lastlog $now
-        table delete -subtable $::table_name -all
+        table replace $static::last_log_key $now
+        table delete -subtable $static::metric_table_name -all
     }
 }
 ```
