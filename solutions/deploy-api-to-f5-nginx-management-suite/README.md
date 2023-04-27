@@ -3,12 +3,12 @@
 ## Solution Description
 <img src="images/architecture.png" height="75%" width="75%">
 
-In this solution a developer's changes to an API specified by an OpenAPI document are deployed to F5 NGINX API Connectivity Manager (ACM).
-The changes are deployed using an Ansible playbook that leverages ACM's REST API.
-Using this solution in a CI/CD pipeline provides a way to automate API discovery, registration, and security as API changes are made.
+In this solution, F5 NGINX API Connectivity Manager (ACM) deploys a developer's changes to an API specified by an OpenAPI document.
+An Ansible playbook updates ACM by leveraging ACM's REST API.
+Using this solution in a CI/CD pipeline provides a way to automate API discovery, registration, and security.
 
 ## Value
-API changes are published to a central location as they are made to improve API discovery.
+Automation of API change publication to a central location improves API discovery.
 Specifically, this solution solves the following use case:
 ```gherkin
 Given a running instance of F5 NGINX Management Suite
@@ -22,20 +22,20 @@ Then the API documentation in the Dev Portal is updated
 [![Video](https://img.youtube.com/vi/2fRqVYpZOK4/maxresdefault.jpg)](https://www.youtube.com/watch?v=2fRqVYpZOK4&t=519s)
 
 ## Automation to Deploy Solution
-Automation is done using Ansible.
+This solution uses Ansible for automation.
 Running the `deploy.yml` playbook with the appropriate environment variables will deploy the OpenAPI document to F5 NGINX Management Suite.
 
 ### Environment Variables
-* NMS_WORKSPACE: The service workspace that API changes should be published to.
-* NMS_USER: Username of the Management Suite account that will be making the updates.
-* NMS_PASSWORD: Password of the Management Suite account that will be making the updates.
-* NMS_API_HOST: Hostname of NGINX Data Plane host.
-* NMS_DEV_HOST: Hostname of the NGINX Developer Portal host.
-* SVC_HOST: The hostname of the backend that is serving the API.
+* NMS_WORKSPACE: The service workspace that receives API changes
+* NMS_USER: Username of the Management Suite account that will make the updates
+* NMS_PASSWORD: Password of the Management Suite account that make the updates
+* NMS_API_HOST: Hostname of NGINX Data Plane host
+* NMS_DEV_HOST: Hostname of the NGINX Developer Portal host
+* SVC_HOST: The hostname of the backend that hosts the API
 
 ### CI/CD Example
 Below is an example of running the playbook in a GitLab CI/CD job.
-Most of the above environment variables are specified in the CI/CD variable settings.
+We can set the above environment variables in the CI/CD variable settings.
 
 ```yaml
 deploy-api:
@@ -48,8 +48,8 @@ deploy-api:
 ```
 
 ## Deep Dive
-This section goes through the `deploy.yaml` Ansible Playbook in additional detail.
-The playbook is making use of the `ansible.builtin.url` module to make calls to the F5 NGINX API Connectivity Manager REST API.
+This section goes through the `deploy.yaml` Ansible Playbook in more detail.
+The playbook makes use of the `ansible.builtin.url` module to make calls to the F5 NGINX API Connectivity Manager REST API.
 
 ### Updating the API Document
 ```yaml
@@ -121,8 +121,8 @@ Instead we can use a `PUT` request to update the proxy configuration.
 ```
 At the beginning of the playbook we create the proxy configuration and store it in a variable.
 This makes it easier for us to reuse this data for different HTTP requests without duplicating it in the playbook.
-When the API document is uploaded, it is given a generated name.
-Fortunately, that name is deterministic, so we can predict what it will be in order to provide it in the proxy configuration in the `specRef` property.
+When the playbook uploads the API document it generates a name.
+Since that name is deterministic, we can predict it to provide it in the proxy configuration in the `specRef` property.
 
 ```yaml
   - name: Check Proxy
