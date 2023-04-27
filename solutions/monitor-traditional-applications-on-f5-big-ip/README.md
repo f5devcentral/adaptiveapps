@@ -1,9 +1,9 @@
 # Monitoring Traditional Applications on F5 BIG-IP
 
 ## Solution Description
-Customers may find it cumbersome, time-consuming, and costly to proactively ensure that their mission-critical workloads are operating in an optimized manner.
+Customers may find it cumbersome, time-consuming, and costly to proactively ensure that their mission-critical workloads operate in an optimized manner.
 This proves challenging to ensure a consistently high-quality user experience (UX) to ensure customer stickiness and repeatable business.
-In order to address these challenges, this solution demonstrates how to configure F5 BIG-IP using the Telemetry Streaming and Application Services extensions to send traffic metrics to an Open Telemetry Collector.
+To address these challenges, this solution demonstrates how to configure F5 BIG-IP using the Telemetry Streaming and Application Services extensions to send traffic metrics to an Open Telemetry Collector.
 For the demo, we have our [Open Telemetry Collector](https://github.com/open-telemetry/opentelemetry-collector-contrib) configured to forward data to a [Grafana LGTM](https://grafana.com/) stack, but any monitoring solution compatible with Open Telemetry should work.
 
 <img src="images/architecture.png" height="50%" width="50%">
@@ -25,17 +25,17 @@ Demo publication is in progress, please check back later.
 ## Automation to Deploy Solution
 1. Install [Telemetry Streaming extension](https://github.com/F5Networks/f5-telemetry-streaming).
 2. Install [Application Services extension](https://github.com/F5Networks/f5-appsvcs-extension).
-3. Modify `open-telemetry.ts.json` with information on how to connect to your Open Telemetry Collector.
+3. Edit `open-telemetry.ts.json` with information on how to connect to your Open Telemetry Collector.
 4. Send a POST request to the `mgmt/shared/telemetry/declare` endpoint with `open-telemetry.ts.json` as the payload.
 5. Send a POST request to the `mgmt/shared/appsvcs/declare` endpoint with `common.as3.json` as the payload.
-6. Modify  `demo.as3.json` to match the needs of your application.
+6. Edit  `demo.as3.json` to match the needs of your application.
 7. Send a POST request to the `mgmt/shared/appsvcs/declare` endpoint with `demo.as3.json` as the payload.
 
 ## Deep Dive
 ### Telemetry Streaming Configuration
-There are three components we need to configure in Telemetry Streaming to get the data we want to an Open Telemetry Collector.
+We need to configure three components in Telemetry Streaming to get the data we want to an Open Telemetry Collector.
 In the following sections we will explore how to configure each of these components.
-The full Telemetry Streaming declaration is available as [open-telemetry.ts.json](open-telemetry.ts.json).
+You can find the full Telemetry Streaming declaration in this repository as [open-telemetry.ts.json](open-telemetry.ts.json).
 
 #### System Poller
 ```json
@@ -52,12 +52,12 @@ The full Telemetry Streaming declaration is available as [open-telemetry.ts.json
 }
 ```
 Here we have a `Telemetry_System_Poller` class configured with custom endpoints to gather response status codes.
-Custom endpoints are being used here to only gather the data we are interested in.
-This allows Telemetry Streaming to do less work and have significantly less impact on the BIG-IP system.
-Because we are gathering a lot less data than the default System Poller, we can use a more aggressive query interval of 10 seconds.
-Custom endpoints can be used to gather any data that is available through the [iControlREST](https://clouddocs.f5.com/api/icontrol-rest/) API.
+We use custom endpoints here to filter the gathered data down to what we need.
+This allows Telemetry Streaming to do less work and reduce its impact on the BIG-IP system.
+With reduced impact on the system, we can use a more aggressive query interval of 10 seconds.
+Custom endpoints can gather any data available through the [iControlREST](https://clouddocs.f5.com/api/icontrol-rest/) API.
 If you would rather use SNMP, Telemetry Streaming can now [query SNMP endpoints](https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest/declarations.html#querying-snmp-using-a-custom-endpoint).
-Additional information on the endpoints that Telemetry Streaming gathers by default can be found [here](https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest/poller-default-output-reference.html).
+You can find more information on the endpoints that Telemetry Streaming gathers by default [here](https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest/poller-default-output-reference.html).
 
 #### Listener
 ```json
@@ -66,9 +66,9 @@ Additional information on the endpoints that Telemetry Streaming gathers by defa
   "port": 6514
 }
 ```
-The `Telemetry_Listener` class is very simple to configure in Telemetry Streaming.
-However, we will see that we will need to do some additional configuration to setup the BIG-IP to actually send data to this listener.
-For now, we are just telling Telemetry Streaming to listen for data coming in on port 6514.
+The `Telemetry_Listener` class requires little configuration in the declaration.
+We will need to do more work later to configure the BIG-IP to send data to the Telemetry Streaming listener.
+For now, we just tell Telemetry Streaming to listen for data coming in on port 6514.
 
 #### Consumer
 ```json
@@ -83,44 +83,42 @@ For now, we are just telling Telemetry Streaming to listen for data coming in on
 }
 ```
 Now that we have configured Telemetry Streaming to gather data, we need to configure a `Telemetry_Consumer` class to send that data to our third party monitoring tool.
-For this example, we are sending data to an Open Telemetry Collector over HTTP.
-A list of available Telemetry Streaming consumers can be found [here](https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest/).
-Furthermore, the Open Telemetry Collector can be configured to output to [many different formats](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter).
+For this example, Telemetry Streaming sends data to an Open Telemetry Collector over HTTP.
+You can find a list of available Telemetry Streaming consumers [here](https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest/).
+Open Telemetry Collector supports output [a wide variety of formats](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter).
 
 ### Application Services Common Configuration
 Before we can configure per-application telemetry, we need to setup some shared components.
-These shared components will be used to send data to Telemetry Streaming's Event Listener.
-For this, we will be using the Application Services extension, commonly referred to as AS3.
-The full AS3 declaration is available as [common.as3.json](common.as3.json).
+These shared components send data to Telemetry Streaming's Event Listener.
+For this, we will use the Application Services extension, commonly referred to as AS3.
+You can find the full AS3 declaration in this repository as [common.as3.json](common.as3.json).
 
 #### Configuring Telemetry Streaming Log Publisher
 First, let us look at configuring a BIG-IP Log Publisher component to forward data to Telemetry Streaming's Event Listener.
-Unfortunately, we need a few intermediate components to make this happen.
-These intermediate components are setup in a chain passing the data from one component to the next until it ultimately ends up reaching Telemetry Streaming.
-Now it is time for some good news.
-AS3 can configure all of these components for us.
-Below is a diagram to visualize this chain of components and the AS3 configuration for each component.
+We need to use intermediate BIG-IP components to form a chain passing the data from one component to the next until it ultimately ends up reaching Telemetry Streaming.
+Now for some good news.
+AS3 can configure these components for us.
+The following diagram visualizes this chain of components and the AS3 configuration for each component.
 
 <img src="images/publisherChain.png" height="100%" width="100%">
 
-A very important thing to note here is that we have deviated slightly from the configuration presented in the Telemetry Streaming documentation.
-In order to send data from an iRule, **we need a Log Destination with no formatting**.
-The Telemetry Streaming documentation uses a Splunk formatted Log Destination to get incoming data into a consistent format.
+We have deviated from the configuration presented in the Telemetry Streaming documentation.
+To send data from an iRule, **we need a Log Destination with no formatting** instead of the Splunk formatting used in the Telemetry Streaming documentation.
 
 #### Sending Data to Telemetry Streaming via iRule
 No BIG-IP article would be complete without an iRule.
-Here we are using one to gather HTTP response times and sending them via high speed logging (HSL) to the Log Publisher we set up previously.
-The most important part here is the formatting of the data.
-As an advanced use case, Telemetry Streaming expects this custom data to be in a very particular format.
-* Key value pairs are presented as a comma separated list
-* Key names must have no quotation marks
-* Values must have quotation marks
-* It is best to avoid any spaces in this string
+Here we use one to gather HTTP response times and send them via high speed logging (HSL) to the Log Publisher we set up before.
+Pay careful attention to the formatting of the data.
+As an advanced use case, Telemetry Streaming expects this custom data to be in a particular format.
+* Present Key value pairs as a comma separated list
+* Do not use quotation marks for key names
+* Use quotation marks for values
+* Avoid any spaces in this string
 
-Additionally, this iRule can optionally collect data by country code.
+The iRule can optionally collect data by country code.
 This allows a user to monitor data by region to inform resource distribution decisions.
-Below is the full iRule being used for this example.
-It is base64 encoded in the AS3 declaration to make it easier to embed in the JSON payload.
+The following code sample contains the full iRule used for this example.
+We use base64 encoding in the AS3 declaration to make it easier to embed in the JSON payload.
 Following this pattern, you can create iRules that can gather a wide variety of traffic data.
 
 ```tcl
@@ -211,13 +209,11 @@ when HTTP_RESPONSE {
 ```
 
 ### AS3 Per-Application Configuration
-The AS3 declaration used for the application is slightly modified version of the [basic HTTP example](https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/declarations/getting-started.html#simple-http-application).
-There are two main differences.
-First, we are attaching the iRule from the Common declaration to capture traffic data.
+The AS3 declaration used for the application is the [basic HTTP example](https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/declarations/getting-started.html#simple-http-application) with two modifications.
+First, we attach the iRule from the Common declaration to capture traffic data.
 Second, we have a custom HTTP Profile.
 Using a unique HTTP Profile for each application allows us to identify the HTTP Profile stats as belonging to this application.
-Below is the full AS3 declaration.
-It is also available as `demo.as3.json`.
+You can find the full AS3 declaration in the following code block and in this repository as [demo.as3.json](`demo.as3.json`).
 
 ```json:demo.as3.json
 {
