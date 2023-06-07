@@ -25,7 +25,7 @@ Find out more about adaptive applications on [F5's Website](https://www.f5.com/c
 | -------- | -------- |----------- | --------- |
 | [Deploy API to NGINX Management Suite](solutions/deploy-api-to-f5-nginx-management-suite) | Performance | Use a CI/CD pipeline to publish and update API routing and developer documentation | [F5 NGINX Management Suite](resources/f5-nginx-management-suite) |
 | [Multi-Cluster Application Resilience](solutions/k8s-mutlicluster-resiliency/)| Performance | Leveraging F5 DistributedCloud to provide Kubernetes microservices application resiliency | [Deployment Example](resources/f5xc-vk8s-mk8s-nlb/)
-| [Monitor Traditional Applications on F5 BIG-IP](solutions/monitor-traditional-applications-on-f5-big-ip) | Performance | Use Telemetry Streaming to gather per-application metrics | [F5 NGINX Management Suite](resources/f5-nginx-management-suite) |
+| [Monitor Traditional Applications on F5 BIG-IP](solutions/monitor-traditional-applications-on-f5-big-ip) | Performance | Use Telemetry Streaming to gather per-application metrics | |
 
 ## Resource Inventory
 
