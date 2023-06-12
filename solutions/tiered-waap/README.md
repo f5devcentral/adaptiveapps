@@ -45,6 +45,6 @@ Terraform can automatically spread domains across identical load balancers for u
 
 The security features and settings in each tier are highly dependent on your needs.
 With a couple of changes, an HTTP Load Balancer and App Firewall with default settings will provide a good initial security tier.
-For more information on the available properties and values, please refer to the [Volterra Prov          er documentation](https://registry.terraform.io/providers/volterraedge/volterra/latest/docs).
+For more information on the available properties and values, please refer to the [Volterra Provider documentation](https://registry.terraform.io/providers/volterraedge/volterra/latest/docs).
 One strategy for building out these security objects is to create a sample object in the Distributed Cloud Console, and then view the object's JSON definition.
 The JSON definition uses similar names and values as the Terraform provider.
