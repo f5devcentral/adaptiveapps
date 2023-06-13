@@ -45,3 +45,9 @@ variable "vsphere_network_inside" {
   type        = string
   description = "The name of an internal only network."
 }
+
+variable "volterra_node_password" {
+  type        = string
+  description = "Admin password of the F5 Distributed Cloud Node"
+  sensitive   = true
+}

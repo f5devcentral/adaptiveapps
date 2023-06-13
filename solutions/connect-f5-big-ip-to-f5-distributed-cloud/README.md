@@ -143,6 +143,7 @@ Let's focus on the details specific to deploying a Distributed Cloud Node.
 ```
 
 We can pull the OVA file directly from the official source using the `remote_ovf_url` property.
+You can find all available Distributed Cloud Node images [here](https://docs.cloud.f5.com/docs/images).
 If you would rather upload the OVA file from a local source, you can use the `local_ovf_path` property.
 For more information on these options, check out the documentation on [Deploying Virtual Machines from OVF/OVA](https://registry.terraform.io/providers/hashicorp/vsphere/latest/docs/resources/virtual_machine#deploying-virtual-machines-from-ovfova).
 You can use the same network for the outside and inside (regular) interfaces if that better suites your deployment.
@@ -166,7 +167,7 @@ The `guestinfo.ves.certifiedhardware` setting must be consistent with the OVF us
 A typo in the certified hardware field anywhere will cause setup to fail.
 
 ## Troubleshooting
-You can log in to the Distributed Cloud node via SSH using the `admin` user.
+You can log in to the Distributed Cloud node via SSH using the `admin` user and the password specified in the `volterra_node_password` variable.
 The default password for the `admin` user is `Volterra123`.
 This will log you in to the SiteCLI tool.
 You can use `log vpm` to see the logs and check for errors.

@@ -142,6 +142,7 @@ resource "vsphere_virtual_machine" "f5xc_node" {
   vapp {
     properties = {
       "guestinfo.hostname"              = var.volterra_master_hostname
+      "guestinfo.ves.adminpassword"     = var.volterra_node_password
       "guestinfo.ves.certifiedhardware" = var.volterra_certified_hardware
       "guestinfo.ves.clustername"       = var.volterra_site_name
       "guestinfo.ves.latitude"          = "47.606209"   # Seattle
