@@ -4,6 +4,7 @@
 In this solution we deploy a Distributed Cloud Node in our data center to add the BIG-IP and its applications as a site in Distributed Cloud.
 With that done, we can direct traffic to the BIG-IP by configuring it as an origin server.
 This gives customers access to Distributed Cloud's feature set in an additive manner that does not require changing their existing configuration.
+
 <img src="images/architecture.png">
 
 ## Value
