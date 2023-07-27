@@ -18,3 +18,7 @@ Demo publication is in progress, please check back later.
 3. Send POST request to `https://{tenant}.ves.volterra.io/api/config/namespaces/{namespaceName}/app_firewalls` using the firewall result from the converter
 4. Send POST request to `https://{tenant}.console.ves.volterra.io/api/config/namespaces/{namespaceName}/service_policys` using the service policy result from the converter
 5. You can now attach the Firewall and Service Policy to your HTTP Load Balancer
+
+## Automating the solution
+With APIs available for all the steps to deploy this solution, you can add these steps to a CI/CD pipeline as a script.
+You can find an example of such a script in the `policy-supervisor-converter` directory.
