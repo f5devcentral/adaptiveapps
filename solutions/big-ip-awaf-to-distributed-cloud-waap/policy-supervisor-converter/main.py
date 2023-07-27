@@ -3,6 +3,7 @@
 import argparse
 import io
 import json
+import os
 import re
 import zipfile
 
@@ -85,22 +86,58 @@ def create_service_policy(api_token, tenant, namespace, payload):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('filename')
-    parser.add_argument('--ps-workspace', help='The policysupervisor.io workspace')
-    parser.add_argument('--ps-api-key', help='The policysupervisor.io API key')
-    parser.add_argument('--xc-tenant', help='The Distributed Cloud tenant to deploy objects to')
-    parser.add_argument('--xc-namespace', help='The Distributed Cloud namespace to deploy objects to')
-    parser.add_argument('--xc-api-token', help='The Distributed Cloud API token to use for authorization')
+    parser.add_argument(
+        '--ps-workspace',
+        help='The policysupervisor.io workspace'
+    )
+    parser.add_argument(
+        '--ps-api-key',
+        help='The policysupervisor.io API key'
+    )
+    parser.add_argument(
+        '--xc-tenant',
+        help='The Distributed Cloud tenant to deploy objects to'
+    )
+    parser.add_argument(
+        '--xc-namespace',
+        help='The Distributed Cloud namespace to deploy objects to'
+    )
+    parser.add_argument(
+        '--xc-api-token',
+        help='The Distributed Cloud API token to use for authorization'
+    )
     args = parser.parse_args()
 
-    ps_workspace = args.ps_workspace or os.environ['PS_WORKSPACE']
-    ps_api_key = args.ps_api_key or os.environ['PS_API_KEY']
-    xc_api_token = args.xc_api_token or os.environ['XC_API_TOKEN']
-    xc_tenant = args.xc_tenant or os.environ['XC_TENANT']
-    xc_namespace = args.xc_namespace or os.environ['XC_NAMESPACE']
+    processed_args = {}
+    missing_arg = False
+    for key in ['ps_workspace', 'ps_api_key', 'xc_api_token', 'xc_tenant', 'xc_namespace']:
+        value = getattr(args, key) or os.environ.get(key.upper())
+        if value is None:
+            missing_arg=True
+            print(
+                f'A required value is missing, please set it with the --{key.replace("_", "-")} flag or the {key.upper()} environment variable',
+            )
+        processed_args[key] = value
+    if missing_arg:
+        return
 
     with open(args.filename, 'r', encoding='utf8') as fin:
-        results = convert_policy(ps_api_key, ps_workspace, fin.read())
-    create_firewall(xc_api_token, xc_tenant, xc_namespace, results['firewall'])
-    create_service_policy(xc_api_token, xc_tenant, xc_namespace, results['service_policy'])
+        results = convert_policy(
+            processed_args['ps_api_key'],
+            processed_args['ps_workspace'],
+            fin.read()
+        )
+    create_firewall(
+        processed_args['xc_api_token'],
+        processed_args['xc_tenant'],
+        processed_args['xc_namespace'],
+        results['firewall']
+    )
+    create_service_policy(
+        processed_args['xc_api_token'],
+        processed_args['xc_tenant'],
+        processed_args['xc_namespace'],
+        results['service_policy']
+    )
 
 main()
