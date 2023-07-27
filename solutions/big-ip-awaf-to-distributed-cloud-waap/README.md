@@ -13,7 +13,7 @@ Demo publication is in progress, please check back later.
 <!--[![Video](https://img.youtube.com/vi/2fRqVYpZOK4/maxresdefault.jpg)](https://www.youtube.com/watch?v=2fRqVYpZOK4&t=519s)-->
 
 ## Steps to Deploy Solution
-1. Upload AWAF file to `policysupervisor.io/convert`
+1. Upload AWAF file to `policysupervisor.io/convert` (you can use the `policy.awaf.json` sample policy from this repository)
 2. Download and extract results
 3. Send POST request to `https://{tenant}.ves.volterra.io/api/config/namespaces/{namespaceName}/app_firewalls` using the firewall result from the converter
 4. Send POST request to `https://{tenant}.console.ves.volterra.io/api/config/namespaces/{namespaceName}/service_policys` using the service policy result from the converter
