@@ -5,6 +5,8 @@ Customers find it challenging, complex, and time-consuming to define, deploy, an
 This solution offers both a manual and automated workflow for converting AWAF files into F5 Distributed Cloud Application Firewalls and Service Policy objects.
 You can upload The converted results to a Distributed Cloud Namespace with the HTTP API.
 
+<img src="architecture.png">
+
 ## Value
 By enforcing consistent WAAP security policies across multiple clouds and SaaS environments, organizations can establish a robust and standardized security posture, ensuring comprehensive protection, simplified management, and adherence to compliance requirements.
 
