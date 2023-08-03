@@ -17,9 +17,9 @@ Demo publication is in progress, please check back later.
 ## Steps to Deploy Solution
 1. Upload AWAF file to `policysupervisor.io/convert` (you can use the `policy.awaf.json` sample policy from this repository)
 2. Download and extract results
-3. Send POST request to `https://{tenant}.ves.volterra.io/api/config/namespaces/{namespaceName}/app_firewalls` using the firewall result from the converter
-4. Send POST request to `https://{tenant}.console.ves.volterra.io/api/config/namespaces/{namespaceName}/service_policys` using the service policy result from the converter
-5. You can now attach the Firewall and Service Policy to your HTTP Load Balancer
+3. Copy the firewall JSON file to `Web App & API Protection -> Manager -> App Firewall -> Add App Firewall -> JSON` in Distributed Cloud Console and click `Save and Exit`
+4. Copy the firewall JSON file to `Web App & API Protection -> Manager -> Service Policies -> Service Policies -> Add Service Policy -> JSON` in Distributed Cloud Console and click `Save and Exit`
+5. You can now attach the Firewall and Service Policy to your HTTP Load Balancer in the Distributed Cloud Console
 
 ## Automating the solution
 With APIs available for all the steps to deploy this solution, you can add these steps to a CI/CD pipeline as a script.
