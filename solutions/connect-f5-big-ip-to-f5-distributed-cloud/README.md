@@ -15,8 +15,7 @@ Then traffic can flow from the F5 Distributed Cloud Global Network to the BIG-IP
 ```
 
 ## Demo
-Demo publication is in progress, please check back later.
-<!--[![Video](https://img.youtube.com/vi/2fRqVYpZOK4/maxresdefault.jpg)](https://www.youtube.com/watch?v=2fRqVYpZOK4&t=519s)-->
+[![Video](https://img.youtube.com/vi/KUHv82L5cfo/maxresdefault.jpg)](https://www.youtube.com/watch?v=KUHv82L5cfo&t=543s)
 
 ## Automation to Deploy Solution
 This solution uses the [Volterra](https://registry.terraform.io/providers/volterraedge/volterra/latest/docs) and [VMware vSphere](https://registry.terraform.io/providers/hashicorp/vsphere/latest/docs) Terraform providers.

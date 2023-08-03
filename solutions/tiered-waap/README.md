@@ -18,8 +18,7 @@ Then the application will be protected by appropriate security features
 ```
 
 ## Demo
-Demo publication is in progress, please check back later.
-<!--[![Video](https://img.youtube.com/vi/2fRqVYpZOK4/maxresdefault.jpg)](https://www.youtube.com/watch?v=2fRqVYpZOK4&t=519s)-->
+[![Video](https://img.youtube.com/vi/KUHv82L5cfo/maxresdefault.jpg)](https://www.youtube.com/watch?v=KUHv82L5cfo&t=824s)
 
 ## Automation to Deploy Solution
 This solution uses the [Volterra](https://registry.terraform.io/providers/volterraedge/volterra/latest/docs) provider.
