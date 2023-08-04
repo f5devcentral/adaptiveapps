@@ -1,7 +1,7 @@
 [![license](https://img.shields.io/github/license/f5devcentral/adaptiveapps)](../../LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-# Malware & AntiVirus F5XC 
+# Malware & AntiVirus F5 XC 
 
 ## Table of Contents
 
@@ -14,7 +14,6 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Decommission](#decommission)
-- [TODO](#todo)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
@@ -39,7 +38,7 @@ To support this opinionated deployment pattern the following tools, components a
 
 * [Terraform CLI](https://www.terraform.io/docs/cli-index.html)
 * [git](https://git-scm.com/)
-* [F5XC API Credentials](https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials)
+* [F5 XC API Credentials](https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials)
 * [AWS CLI](https://aws.amazon.com/cli/) access.
 * [AWS Access Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)
 * [OpenSSL Toolkit](https://www.openssl.org/source/)
@@ -51,13 +50,13 @@ To support this opinionated deployment pattern the following tools, components a
 ### **Distributed ICAP & Malware services**
 
 This section details the brief deployment steps to replicate the cloud component using the reference example of 
-F5 Distributed Cloud (XC) Virtual K8s (vK8s) deployment within the CustomerEdge (CE) in demonstration of distributed 
+F5 Distributed Cloud (XC) Managed K8s (mK8s) deployment within the CustomerEdge (CE) in demonstration of distributed 
 ICAP & Malware services.
 
 > #### *__Prerequisite__*
 >
 > ***NOTE:*** *For the use of this solution the following command to extract .p12 certificate to an individual certificate 
-> and private key for the F5XC Tenancy:*
+> and private key for the F5 XC Tenancy:*
 > ```shell
 > openssl pkcs12 -info -legacy -in \<tenant\>.console.ves.volterra.io.api-creds.p12 -out certificate.cert -nokeys
 > openssl pkcs12 -info -legacy -in \<tenant\>.console.ves.volterra.io.api-creds.p12 -out private_key.key -nodes -nocerts
@@ -96,7 +95,7 @@ base_tag = "icap-ce"
 ```
 
 > **_Note:_** 
-> *This deploys to the US F5XC Region, please refer to 
+> *This deploys to the US F5 XC Region, please refer to 
 > [F5 Distributed Cloud Site](https://docs.cloud.f5.com/docs/ves-concepts/site) for more details on deployed edges 
 > and regions.*
 
@@ -113,7 +112,7 @@ base_tag = "icap-ce"
 > cp api_cred.p12 $HOME/resources/terraform/files
 ```
 
-5. Prepare the OpenSSL Certificate and Private Key for usage with F5XC Site registration;
+5. Prepare the OpenSSL Certificate and Private Key for usage with F5 XC Site registration;
 
 ```sh
 cd $HOME/resources/terraform/f5xc-aws-icap/files
@@ -171,7 +170,7 @@ It is recommended to decommission this deployment to both not incur additional c
 workflow to achieve this is to:
 
 * Microservices (ICAP) Application Rollback
-* F5XC Virtual Kubernetes Rollback
+* F5 XC Virtual Kubernetes Rollback
 
 The steps to achieve this are outlined in the following sections
 
@@ -192,7 +191,7 @@ kubectl delete -f manifest.yaml --kubeconfig /path/to/downloaded/kubeconfig.yaml
     - `kubectl get pods -o=wide -n=default`
 
 
-#### *F5XC Virtual Kubernetes Rollback (microservices vk8s f5xc)*
+#### *F5 XC Manageed Kubernetes Rollback (microservices mk8s f5 xc)*
 
 The following steps are required to rollback the microservices hosted in F5 DistributedCloud;
 
@@ -204,7 +203,7 @@ export VOLT_API_URL=https://tenant.console.ves.volterra.io/api
 export VES_P12_PASSWORD="SuperSecret"
 ```
 
-3. change directory to F5XC icap deployment:
+3. change directory to F5 XC icap deployment:
     - `cd $HOME/resources/terraform/f5xc-aws-icap`
    
 4. initialise terraform with previous build `TFVARS`:
