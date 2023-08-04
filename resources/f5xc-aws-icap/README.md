@@ -9,7 +9,6 @@
 <summary>Click to expand.</summary>
 
 - [Solution Description](#solution_description)
-- [Value](#value)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Configuration](#configuration)
