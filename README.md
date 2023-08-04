@@ -28,6 +28,7 @@ Find out more about adaptive applications on [F5's Website](https://www.f5.com/c
 | [Monitor Traditional Applications on F5 BIG-IP](solutions/monitor-traditional-applications-on-f5-big-ip) | Performance | Use Telemetry Streaming to gather per-application metrics | |
 | [Connect F5 BIG-IP to F5 Distributed Cloud](solutions/connect-f5-big-ip-to-f5-distributed-cloud) | Deployment | Connect an existing BIG-IP to Distributed Cloud to access additional features | |
 | [Tiered F5 Distributed Cloud Security](solutions/tiered-waap) | Security | Use a tiered architecture to focus SecOps resources on your most critical applications | |
+| [Malware & Antivirus Protection as a Service in F5XC](resources/f5xc-aws-icap) | Security | Use Malware & AV Scanning Services at the Edge ||
 
 ## Resource Inventory
 
