@@ -1,6 +1,6 @@
 // API Creds
-api_url = "https://<tenant>.console.ves.volterra.io/api"
-api_p12_file = "<tenant>.console.ves.volterra.io.api-creds.p12"
+api_url = "https://tenant.console.ves.volterra.io/api"
+api_p12_file = "tenant.console.ves.volterra.io.api-creds.p12"
 // Base Name for deployment
 base_tag = "clamav"
 // TCP Loadbalancer

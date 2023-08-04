@@ -65,7 +65,7 @@ in demonstration of distributed ICAP & Malware services.
 
 This solution makes use of [`clamav`](https://github.com/Cisco-Talos/clamav) in a refactor of the previous 
 [Multi-Cluster Application Residence](https://github.com/f5devcentral/adaptiveapps/blob/main/resources/f5xc-vk8s-mk8s-nlb/README.md)
-for deployment of ICAP/Malware AntiVirus Distrubted deployment solution.
+for deployment of ICAP/Malware AntiVirus Distributed deployment solution.
 
 #### *__Tasks__*:
 
@@ -114,6 +114,7 @@ base_tag = "icap-ce"
 ```
 
 5. Prepare the OpenSSL Certificate and Private Key for usage with F5XC Site registration;
+
 ```sh
 cd $HOME/resources/terraform/f5xc-aws-icap/files
 openssl pkcs12 -info -legacy -in \<tenant\>.console.ves.volterra.io.api-creds.p12 -out certificate.cert -nokeys
@@ -150,12 +151,19 @@ ___
 
 This section details the steps that can be replicated with CI/CD Pipelines;
 
-10. using downloaded `kubeconfig` to deploy ClamAM application stack to namespace;
+10. using downloaded `kubeconfig` to deploy ClamAV application stack to namespace;
 
 ```shell
 kubectl apply -f $HOME/resources/k8s-manifests/f5xc-icap/ClamAVConfigMap.yaml --kubeconfig /path/to/downloaded/kubeconfig.yaml
 ```
 
+
+
+> *NOTE:*
+> As per the associated demo video, to replicate the port forwarding;
+> ```shell
+> kubectl port-forward cra-deployment-<pod-instance> 3000:3000 --kubeconfig /path/to/ves_system_f5xc-icap_kubeconfig_global.yaml
+> ```  
 ---
 ## Decommission
 
@@ -172,7 +180,7 @@ The steps to achieve this are outlined in the following sections
 
 1. change path to manifest file;
 ```shell
-cd resources/k8s-manifests/f5xc-aws-icap/
+cd resource/k8s-manifests/f5xc-aws-icap/
 ```
 
 2. delete the microservices deployment;
@@ -204,6 +212,7 @@ export VES_P12_PASSWORD="SuperSecret"
    
 7. destroy plan:
     - `terraform destroy --auto-approve --var-file=$HOME/f5xc_icap.tfvars`
+
 
 
 ---
