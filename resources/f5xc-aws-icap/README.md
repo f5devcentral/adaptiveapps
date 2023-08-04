@@ -26,7 +26,7 @@
 ## Solution Description
 
 This solution details the brief deployment steps to replicate the cloud component using the reference example of 
-F5 Distributed Cloud (XC) Managed K8s (mK8s) deployment, as seen in the diagram above, in demonstration of ICAP & 
+F5 Distributed Cloud (XC) Managed K8s (mK8s) deployment in demonstration of ICAP & 
 Malware services at the CustomerEdge.  This code can be seen reflected with the high-level diagram below:
 
 <img src=images/macif.png width="1050" class="center">
