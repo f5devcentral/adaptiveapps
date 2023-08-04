@@ -51,8 +51,8 @@ To support this opinionated deployment pattern the following tools, components a
 ### **Distributed ICAP & Malware services**
 
 This section details the brief deployment steps to replicate the cloud component using the reference example of 
-F5 Distributed Cloud (XC) Virtual K8s (vK8s) deployment within the CustomerEdge (CE), as seen in the diagram above, 
-in demonstration of distributed ICAP & Malware services.
+F5 Distributed Cloud (XC) Virtual K8s (vK8s) deployment within the CustomerEdge (CE) in demonstration of distributed 
+ICAP & Malware services.
 
 > #### *__Prerequisite__*
 >
