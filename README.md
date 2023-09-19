@@ -29,7 +29,7 @@ Find out more about adaptive applications on [F5's Website](https://www.f5.com/c
 | [Connect F5 BIG-IP to F5 Distributed Cloud](solutions/connect-f5-big-ip-to-f5-distributed-cloud) | Deployment | Connect an existing BIG-IP to Distributed Cloud to access additional features | |
 | [Tiered F5 Distributed Cloud Security](solutions/tiered-waap) | Security | Use a tiered architecture to focus SecOps resources on your most critical applications | |
 | [Malware & Antivirus Protection as a Service in F5XC](resources/f5xc-aws-icap) | Security | Use Malware & AV Scanning Services at the Edge ||
-| [Migrate from F5 BIG-IP AWAF to F5 Distributed Cloud WAAP](solutions/big-ip-awaf-to-distributed-cloud-waap) | Security | Use `policysupervisor.io` to migrate from AWAF to WAAP | |
+| [Replicate a F5 BIG-IP AWAF Policy in F5 Distributed Cloud WAAP](solutions/big-ip-awaf-to-distributed-cloud-waap) | Security | Use `policysupervisor.io` to replicate AWAF policies in WAAP | |
 
 ## Resource Inventory
 
