@@ -20,6 +20,8 @@ By enforcing consistent WAAP security policies across multiple clouds and SaaS e
 4. Copy the firewall JSON file to `Web App & API Protection -> Manager -> Service Policies -> Service Policies -> Add Service Policy -> JSON` in Distributed Cloud Console and click `Save and Exit`
 5. You can now attach the Firewall and Service Policy to your HTTP Load Balancer in the Distributed Cloud Console
 
-## Automating the solution
+## Using Automation for a Policy-as-Code Solution
 With APIs available for all the steps to deploy this solution, you can add these steps to a CI/CD pipeline as a script.
 You can find an example of such a script in the `policy-supervisor-converter` directory.
+This allows for a policy-as-code solution where you can commit a BIG-IP AWAF policy to your repository, run the script as part of your CI/CD pipeline, and have your policy replicated to all desired targets.
+Updates to those policies will continue to be replicated to the target platforms by the same CI/CD pipeline.
